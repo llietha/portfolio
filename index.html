@@ -110,43 +110,102 @@
     // ---------------------
     const projects = [
       {
-        slug: 'quadruped-rl',
-        title: 'Quadruped RL Gaits',
-        cover: 'https://images.unsplash.com/photo-1600761253336-2d0243b86591?q=80&w=1600&auto=format&fit=crop',
-        summary: 'Learning stable gaits across uneven terrain using imitation + RL.',
-        date: '2025-05-10',
-        tags: ['Robotics','Reinforcement Learning','Control'],
+        slug: 'bachelor-thesis',
+        title: 'Bachelor Thesis',
+        cover: 'https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Undergraduate thesis — replace with your topic and 1–2 line outcome.',
+        date: '',
+        tags: ['Thesis','Research'],
         bodyHtml: `
-          <p>This project explores coordinated gait learning for a quadruped on rough terrain. We combined an imitation prior with a robust RL objective and domain randomization.</p>
-          <p>Highlights include a curriculum over terrain statistics, trajectory stabilization via hybrid EKF state estimation, and energy-aware reward shaping.</p>
+          <p><strong>Replace me:</strong> Briefly state the problem, your approach, and the main results/metrics. Add 3–5 bullet highlights.</p>
+          <ul>
+            <li>Objective: …</li>
+            <li>Methods: …</li>
+            <li>Key result: …</li>
+          </ul>
         `,
         images: [
-          {src:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1600&auto=format&fit=crop', span:'wide', alt:'Robot on terrain'},
-          {src:'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1600&auto=format&fit=crop', span:'half', alt:'Control chart'},
-          {src:'https://images.unsplash.com/photo-1534759846116-5797a4d9c77f?q=80&w=1600&auto=format&fit=crop', span:'half', alt:'Training logs'}
+          {src:'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop', span:'wide', alt:'Thesis illustration'}
         ],
-        videos: [
-          {type:'youtube', id:'dQw4w9WgXcQ'}
-        ]
+        videos: []
       },
       {
-        slug: 'fmcdaq2-port',
-        title: 'High‑Speed DAQ on Zynq (AD‑FMCDAQ2‑EBZ)',
-        cover: 'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop',
-        summary: 'Ported ADI reference design to a different Zynq UltraScale+ platform for 30+ MHz sampling.',
-        date: '2025-03-21',
-        tags: ['FPGA','SoC','JESD204B'],
+        slug: 'computational-models-of-motion',
+        title: 'Computational Models of Motion — Course Project',
+        cover: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Implemented motion modeling & control on synthetic/recorded data.',
+        date: '',
+        tags: ['Course Project','Robotics','Motion'],
         bodyHtml: `
-          <p>Ported the AD‑FMCDAQ2‑EBZ reference design to a Digilent Genesys ZU‑5EV (xczu5ev). Modified GTY lane mapping, JESD204B parameters, and XDC constraints.</p>
-          <p>Validated with IIO oscilloscope and custom DMA capture to RAM. Achieved stable links and verified sampling integrity.</p>
+          <p><strong>Replace me:</strong> What motion representation you used (e.g., motion graphs, VAEs, diffusion), datasets, and evaluation.</p>
         `,
-        images: [
-          {src:'https://images.unsplash.com/photo-1516245834210-c4c142787335?q=80&w=1600&auto=format&fit=crop', span:'half', alt:'FPGA board'},
-          {src:'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?q=80&w=1600&auto=format&fit=crop', span:'half', alt:'High‑speed traces'}
-        ],
-        videos: [
-          {type:'mp4', src:'sample-video.mp4'} // put an mp4 file next to the HTML and update the name
-        ]
+        images: [],
+        videos: []
+      },
+      {
+        slug: 'planning-and-decision-making',
+        title: 'Planning & Decision Making for Autonomous Robots — Course Project',
+        cover: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41e5?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Built planners / POMDP/RL pipelines for autonomous navigation tasks.',
+        date: '',
+        tags: ['Course Project','Planning','Decision‑Making'],
+        bodyHtml: `
+          <p><strong>Replace me:</strong> Problem setup, algorithms (e.g., A*, RRT*, MPC, POMDP), and results.</p>
+        `,
+        images: [],
+        videos: []
+      },
+      {
+        slug: 'mobile-health-activity-monitoring',
+        title: 'Mobile Health & Activity Monitoring — Course Project',
+        cover: 'https://images.unsplash.com/photo-1516542076529-1ea3854896e1?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Wearable‑sensor pipeline for activity recognition and health metrics.',
+        date: '',
+        tags: ['Course Project','mHealth','Wearables','ML'],
+        bodyHtml: `
+          <p><strong>Replace me:</strong> Sensors used (ACC/GYR/PPG), features/models, metrics (e.g., F1, AUROC).</p>
+        `,
+        images: [],
+        videos: []
+      },
+      {
+        slug: 'introduction-to-mechatronics',
+        title: 'Introduction to Mechatronics — Course Project',
+        cover: 'https://images.unsplash.com/photo-1581090468281-4bee9eba2a27?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Designed and built a mechatronic prototype with embedded control.',
+        date: '',
+        tags: ['Course Project','Mechatronics','Embedded'],
+        bodyHtml: `
+          <p><strong>Replace me:</strong> Hardware stack, control approach, fabrication, and demo video.</p>
+        `,
+        images: [],
+        videos: []
+      },
+      {
+        slug: 'computational-control',
+        title: 'Computational Control — Course Project',
+        cover: 'https://images.unsplash.com/photo-1488229297570-58520851e868?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Optimization‑based control (e.g., LQR/MPC/DeePC) on benchmark tasks.',
+        date: '',
+        tags: ['Course Project','Control','Optimization'],
+        bodyHtml: `
+          <p><strong>Replace me:</strong> Model, constraints, solver, and performance versus baselines.</p>
+        `,
+        images: [],
+        videos: []
+      },
+      {
+        slug: 'introduction-to-machine-learning',
+        title: 'Introduction to Machine Learning — Course Project',
+        cover: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1600&auto=format&fit=crop',
+        summary: 'Built ML models for classification/regression with proper validation.',
+        date: '',
+        tags: ['Course Project','Machine Learning'],
+        bodyHtml: `
+          <p><strong>Replace me:</strong> Problem description, data processing, models (e.g., XGBoost/NN), and results.</p>
+        `,
+        images: [],
+        videos: []
       }
     ];
 
@@ -278,3 +337,4 @@
   </script>
 </body>
 </html>
+
