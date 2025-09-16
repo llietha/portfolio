@@ -1,25 +1,36 @@
-name: Deploy to GitHub Pages
+name: Robust GitHub Pages Deploy
 
 on:
-  push:
-    branches: ["main"]
+  # Trigger when the default pages workflow fails
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+    branches: [main]
+  
+  # Manual trigger
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
-  group: "pages"
+  group: "pages-retry"
   cancel-in-progress: false
 
 jobs:
-  build:
+  check-and-retry:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'cancelled' || github.event.workflow_run.conclusion == 'failure' || github.event_name == 'workflow_dispatch' }}
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Wait for potential ongoing deployment
+        run: sleep 30
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -32,54 +43,71 @@ jobs:
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages with retry
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          timeout: 900000  # 15 minutes
-          error_count: 3   # Reduce error count for faster failure detection
-          reporting_interval: 10000  # Report every 10 seconds
-        continue-on-error: true
       
-      - name: Retry deployment if failed
-        if: steps.deployment.outcome == 'failure'
-        id: retry-deployment
+      - name: Deploy to GitHub Pages (Attempt 1)
+        id: deployment1
         uses: actions/deploy-pages@v4
         with:
-          timeout: 600000  # 10 minutes for retry
-          error_count: 2
+          timeout: 600000  # 10 minutes
+          error_count: 5
+          reporting_interval: 10000
+        continue-on-error: true
+        
+      - name: Wait between retries
+        if: steps.deployment1.outcome == 'failure'
+        run: sleep 60
+      
+      - name: Deploy to GitHub Pages (Attempt 2)
+        if: steps.deployment1.outcome == 'failure'
+        id: deployment2
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 480000  # 8 minutes
+          error_count: 3
           reporting_interval: 15000
         continue-on-error: true
+        
+      - name: Wait between retries
+        if: steps.deployment2.outcome == 'failure'
+        run: sleep 120
       
-      - name: Final deployment attempt
-        if: steps.retry-deployment.outcome == 'failure'
-        id: final-deployment
+      - name: Deploy to GitHub Pages (Final Attempt)
+        if: steps.deployment2.outcome == 'failure'
+        id: deployment3
         uses: actions/deploy-pages@v4
         with:
-          timeout: 300000  # 5 minutes for final attempt
-          error_count: 1
+          timeout: 300000  # 5 minutes
+          error_count: 2
           reporting_interval: 20000
       
-      - name: Check deployment status
+      - name: Report deployment results
         run: |
-          if [[ "${{ steps.deployment.outcome }}" == "success" ]]; then
-            echo "✅ Deployment successful on first attempt"
-            echo "Page URL: ${{ steps.deployment.outputs.page_url }}"
-          elif [[ "${{ steps.retry-deployment.outcome }}" == "success" ]]; then
-            echo "✅ Deployment successful on retry"
-            echo "Page URL: ${{ steps.retry-deployment.outputs.page_url }}"
-          elif [[ "${{ steps.final-deployment.outcome }}" == "success" ]]; then
-            echo "✅ Deployment successful on final attempt"
-            echo "Page URL: ${{ steps.final-deployment.outputs.page_url }}"
+          echo "🔍 Deployment Results Summary:"
+          echo "======================================"
+          
+          if [[ "${{ steps.deployment1.outcome }}" == "success" ]]; then
+            echo "✅ Deployment successful on attempt 1"
+            echo "🌐 Page URL: ${{ steps.deployment1.outputs.page_url }}"
+            exit 0
+          elif [[ "${{ steps.deployment2.outcome }}" == "success" ]]; then
+            echo "✅ Deployment successful on attempt 2 (after retry)"
+            echo "🌐 Page URL: ${{ steps.deployment2.outputs.page_url }}"
+            exit 0
+          elif [[ "${{ steps.deployment3.outcome }}" == "success" ]]; then
+            echo "✅ Deployment successful on attempt 3 (final retry)"
+            echo "🌐 Page URL: ${{ steps.deployment3.outputs.page_url }}"
+            exit 0
           else
             echo "❌ All deployment attempts failed"
+            echo "⚠️  Please check GitHub Pages service status or repository settings"
+            
+            # Provide helpful debugging information
+            echo ""
+            echo "🔧 Troubleshooting tips:"
+            echo "1. Check GitHub Status: https://www.githubstatus.com/"
+            echo "2. Verify repository Pages settings in Settings > Pages"
+            echo "3. Ensure workflow has proper permissions"
+            echo "4. Check for any repository-specific issues"
+            
             exit 1
           fi
