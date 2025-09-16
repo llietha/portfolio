@@ -1,3 +1,4 @@
+---
 name: Robust GitHub Pages Deploy
 
 on:
@@ -6,7 +7,7 @@ on:
     workflows: ["pages-build-deployment"]
     types: [completed]
     branches: [main]
-  
+
   # Manual trigger
   workflow_dispatch:
 
@@ -23,27 +24,30 @@ concurrency:
 jobs:
   check-and-retry:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'cancelled' || github.event.workflow_run.conclusion == 'failure' || github.event_name == 'workflow_dispatch' }}
-    
+    if: >
+      ${{ github.event.workflow_run.conclusion == 'cancelled' ||
+      github.event.workflow_run.conclusion == 'failure' ||
+      github.event_name == 'workflow_dispatch' }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Wait for potential ongoing deployment
         run: sleep 30
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-      
+
       - name: Deploy to GitHub Pages (Attempt 1)
         id: deployment1
         uses: actions/deploy-pages@v4
@@ -52,11 +56,11 @@ jobs:
           error_count: 5
           reporting_interval: 10000
         continue-on-error: true
-        
+
       - name: Wait between retries
         if: steps.deployment1.outcome == 'failure'
         run: sleep 60
-      
+
       - name: Deploy to GitHub Pages (Attempt 2)
         if: steps.deployment1.outcome == 'failure'
         id: deployment2
@@ -66,11 +70,11 @@ jobs:
           error_count: 3
           reporting_interval: 15000
         continue-on-error: true
-        
+
       - name: Wait between retries
         if: steps.deployment2.outcome == 'failure'
         run: sleep 120
-      
+
       - name: Deploy to GitHub Pages (Final Attempt)
         if: steps.deployment2.outcome == 'failure'
         id: deployment3
@@ -79,12 +83,12 @@ jobs:
           timeout: 300000  # 5 minutes
           error_count: 2
           reporting_interval: 20000
-      
+
       - name: Report deployment results
         run: |
           echo "🔍 Deployment Results Summary:"
           echo "======================================"
-          
+
           if [[ "${{ steps.deployment1.outcome }}" == "success" ]]; then
             echo "✅ Deployment successful on attempt 1"
             echo "🌐 Page URL: ${{ steps.deployment1.outputs.page_url }}"
@@ -100,7 +104,7 @@ jobs:
           else
             echo "❌ All deployment attempts failed"
             echo "⚠️  Please check GitHub Pages service status or repository settings"
-            
+
             # Provide helpful debugging information
             echo ""
             echo "🔧 Troubleshooting tips:"
@@ -108,6 +112,6 @@ jobs:
             echo "2. Verify repository Pages settings in Settings > Pages"
             echo "3. Ensure workflow has proper permissions"
             echo "4. Check for any repository-specific issues"
-            
+
             exit 1
           fi
