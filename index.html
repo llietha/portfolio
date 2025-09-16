@@ -66,6 +66,10 @@
     .media-grid img, .media-grid video, .media-grid iframe{width:100%; border-radius:14px; border:1px solid color-mix(in oklab, var(--text) 14%, transparent)}
     .media-grid .wide{grid-column: span 12}
     .media-grid .half{grid-column: span 6}
+    .media-grid .third{grid-column: span 4}
+    .media-grid figure{margin:0}
+    .media-grid figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    .yt iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 
     footer{margin-top:46px; padding-top:20px; border-top:1px dashed color-mix(in oklab, var(--text) 16%, transparent); color:var(--muted); text-align:center}
 
@@ -139,58 +143,76 @@
         date: '',
         tags: ['Course Project','Robotics','Motion','RL','Optimization'],
         bodyHtml: `
-          <p>This course introduces the mathematical foundations and computational tools to generate motion for digital humans, virtual creatures, and robots—drawing from applied mathematics, control theory, and machine learning, with hands‑on exercises from locomotion controllers to physics‑based animation.</p>
+          <p>This course introduces the mathematical foundations and computational tools for generating motion for digital humans, virtual creatures, and robots. It blends applied mathematics, control theory, and machine learning, and is illustrated through locomotion controllers, trajectory optimization, and deep‑RL‑based motion synthesis.</p>
 
-          <details><summary><strong>Syllabus (compact)</strong></summary>
-            <ul>
-              <li>Introduction &amp; Kinematic modeling</li>
-              <li>Unconstrained optimization &amp; inverse kinematics</li>
-              <li>Data‑driven models of motion</li>
-              <li>Constrained optimization &amp; sensitivity analysis</li>
-              <li>Trajectory optimization</li>
-              <li>Feedback control &amp; locomotion</li>
-              <li>Foundations of Deep RL (parts 1–2)</li>
-              <li>Learning methods for motion synthesis (parts 1–2)</li>
-              <li>Invited lecture</li>
-            </ul>
-          </details>
+<p><strong>Topics covered:</strong> kinematic modeling; unconstrained/constrained optimization and inverse kinematics; sensitivity analysis; trajectory optimization; feedback control and locomotion; foundations of deep reinforcement learning; learning methods for motion synthesis; invited lecture.</p>
 
-          <h3>Subprojects</h3>
+<h3>Subprojects</h3>
 
           <details class="cardlike"><summary><strong>1) Kinematic walking controller</strong></summary>
             <ul>
-              <li>Inverse kinematics</li>
-              <li>Base trajectory planning</li>
-              <li>Quadruped in simulation</li>
-              <li>Hexapod in simulation &amp; real hardware</li>
+              <li>Implemented foot forward kinematics and both finite‑difference and analytic Jacobians.</li>
+              <li>Built a Gauss–Newton IK solver (FD Jacobian for grading) and a base trajectory planner via velocity integration.</li>
+              <li>Added uneven‑terrain support (height‑map y‑offsets) and defined a hexapod foot‑contact (gait) timeline.</li>
+              <li>Validated in quadruped/hexapod simulation and deployed on SpiderPi hexapod hardware.</li>
             </ul>
             <div class="media-grid">
-              <div class="half"><img src="assets/cmm-kinematics.jpg" alt="Kinematic walking controller"></div>
-              <div class="half"><div class="yt" data-ytid="VIDEO_ID_KIN" style="background-image:url('https://img.youtube.com/vi/VIDEO_ID_KIN/hqdefault.jpg')"></div></div>
+              <figure class="third">
+  <div class="yt" data-yt="https://youtu.be/uCh3qL2x7Hs" style="background-image:url('https://img.youtube.com/vi/uCh3qL2x7Hs/hqdefault.jpg')"></div>
+  <figcaption>Kinematic walking controller for a quadruped robot</figcaption>
+</figure>
+              <figure class="third">
+  <div class="yt" data-yt="https://youtu.be/M8dzODGkXxI" style="background-image:url('https://img.youtube.com/vi/M8dzODGkXxI/hqdefault.jpg')"></div>
+  <figcaption>Kinematic walking controller for a Hexapod robot</figcaption>
+</figure>
+              <figure class="third">
+  <div class="yt" data-yt="https://youtube.com/shorts/ZUIcOtcyFh8?feature=share" style="background-image:url('https://img.youtube.com/vi/ZUIcOtcyFh8/hqdefault.jpg')"></div>
+  <figcaption>Kinematic walking controller for a Hexapod robot deployed on hardware</figcaption>
+</figure>
             </div>
           </details>
-
           <details class="cardlike"><summary><strong>2) Trajectory optimization for quadruped robots</strong></summary>
             <ul>
-              <li>Kinematic → dynamically feasible trajectory</li>
-              <li>Agile motion generation via keyframes</li>
-              <li>Evaluation in physics‑based simulation</li>
+              <li>Built a multiple‑shooting trajectory optimizer in <em>CasADi</em> using a single rigid‑body model; ran experiments at 50&nbsp;Hz.</li>
+              <li>Implemented the objective to follow kinematic reference motions with added smoothness and continuity costs.</li>
+              <li>Added constraints: dynamics and initial state; ground contact (no penetration), zero force in swing, and no foot‑skating during stance.</li>
+              <li>For walking with partial references, generated the missing foot paths and enforced a shoulder‑plane constraint to prevent side motion (no abduction).</li>
+              <li>For jumping, added a leg‑length constraint to stop unrealistic extension and corrected the reference so take‑off and flight are feasible.</li>
+              <li>For bounding, enforced a friction pyramid so horizontal forces disappear in swing and stay within friction limits in stance.</li>
+              <li>Extended to backflips by creating leg references for a 180‑degree flip and building a 360‑degree flip from keyframes.</li>
+              <li>Evaluation in MuJoCo: exported CSVs for playback, implemented a joint PD controller, computed feedforward joint torques via the Jacobian transpose, and combined PD + feedforward with brief behavior notes.</li>
             </ul>
             <div class="media-grid">
-              <div class="half"><img src="assets/cmm-traj.jpg" alt="Trajectory optimization"></div>
-              <div class="half"><div class="yt" data-ytid="VIDEO_ID_TRAJ" style="background-image:url('https://img.youtube.com/vi/VIDEO_ID_TRAJ/hqdefault.jpg')"></div></div>
+              <figure class="half">
+                <div class="yt" data-yt="https://youtu.be/tKlLVA-S8p4" style="background-image:url('https://img.youtube.com/vi/tKlLVA-S8p4/hqdefault.jpg')"></div>
+                <figcaption>Playback of optimized trajectories in MuJoCo.</figcaption>
+              </figure>
+              <figure class="half">
+                <div class="yt" data-yt="https://youtu.be/3H1YKNTbXBA" style="background-image:url('https://img.youtube.com/vi/3H1YKNTbXBA/hqdefault.jpg')"></div>
+                <figcaption>Tracking optimized trajectories using feedforward (FF) + PID.</figcaption>
+              </figure>
             </div>
           </details>
-
-          <details class="cardlike"><summary><strong>3) Deep RL for humanoid motion imitation</strong></summary>
+          $1
             <ul>
-              <li>Reward design &amp; motion imitation</li>
-              <li>Train RL agents in a physics simulator</li>
-              <li>Modulate inputs to generate new motions</li>
+              <li>Trained a simulated humanoid in Isaac Gym with PPO to imitate two clips: walking and cartwheel.</li>
+              <li>Implemented reward terms: base height, joint angles, base orientation, base velocity, end‑effector position, and action smoothness.</li>
+              <li>Added a phase variable to sync each step to the correct frame of the motion clip.</li>
+              <li>Implemented reference state initialization (RSI) to start episodes from random frames, so the policy learns both handstand entry and recovery.</li>
+              <li>Used quaternion‑based orientation in rewards to avoid gimbal lock during upside‑down poses.</li>
+              <li>Defined observations (velocities, joint offsets/velocities, orientation, previous action, base height, phase) and actions as target joint angles tracked by the built‑in position controller.</li>
+              <li>Ran training on an AWS GPU inside Docker and logged progress to Weights & Biases; monitored curves and videos and tuned terms until stable imitation.</li>
+              <li>Evaluated policies with the provided script and saved animations and plots for the results section.</li>
             </ul>
             <div class="media-grid">
-              <div class="half"><img src="assets/cmm-rl.jpg" alt="Deep RL motion imitation"></div>
-              <div class="half"><div class="yt" data-ytid="VIDEO_ID_RL" style="background-image:url('https://img.youtube.com/vi/VIDEO_ID_RL/hqdefault.jpg')"></div></div>
+              <figure class="half">
+  <div class="yt" data-yt="https://youtu.be/oZsgSzABSHc" style="background-image:url('https://img.youtube.com/vi/oZsgSzABSHc/hqdefault.jpg')"></div>
+  <figcaption>Walking motion.</figcaption>
+</figure>
+              <figure class="half">
+  <div class="yt" data-yt="https://youtu.be/w-ADT8fwUsE" style="background-image:url('https://img.youtube.com/vi/w-ADT8fwUsE/hqdefault.jpg')"></div>
+  <figcaption>Cartwheel motion.</figcaption>
+</figure>
             </div>
           </details>
         `,
@@ -283,6 +305,18 @@
 
     window.addEventListener('hashchange', route);
     window.addEventListener('DOMContentLoaded', ()=>{ document.getElementById('year').textContent = new Date().getFullYear(); route(); });
+
+    // Build YouTube thumbnails from data-yt / data-ytid on load
+    window.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.yt').forEach(el=>{
+        const val = el.getAttribute('data-yt') || el.getAttribute('data-ytid');
+        const id = extractYouTubeId(val);
+        if(id){
+          el.style.backgroundImage = `url('https://img.youtube.com/vi/${id}/hqdefault.jpg')`;
+          el.dataset.ytid = id; // normalize
+        }
+      });
+    });
 
     // ---------------------
     // 3) VIEWS
@@ -384,12 +418,32 @@
   document.addEventListener('click', (e) => {
     const el = e.target.closest('.yt');
     if(!el) return;
-    const id = el.getAttribute('data-ytid');
+    const id = el.dataset.ytid || extractYouTubeId(el.getAttribute('data-yt')||el.getAttribute('data-ytid'));
     if(!id) return;
     el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
   });
 
+  // Extract YouTube ID from full URL or raw ID
+  function extractYouTubeId(s){
+    if(!s) return '';
+    try{
+      const u = new URL(s, 'https://example.com');
+      const host = (u.host||'').replace(/^www\./,'');
+      if(host.includes('youtube.com')){
+        if(u.pathname.startsWith('/watch')) return u.searchParams.get('v')||'';
+        if(u.pathname.startsWith('/shorts/')) return u.pathname.split('/')[2]||'';
+        if(u.pathname.startsWith('/embed/')) return u.pathname.split('/')[2]||'';
+      }
+      if(host==='youtu.be'){
+        return u.pathname.slice(1).split('/')[0]||'';
+      }
+    }catch(e){
+      // not a URL: assume it's already an ID
+      return String(s);
+    }
+    return String(s);
+  }
+
 </script>
 </body>
 </html>
-
