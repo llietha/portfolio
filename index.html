@@ -89,6 +89,7 @@
     .detail details[open]{box-shadow: var(--shadow)}
     .yt{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:1px solid color-mix(in oklab, var(--text) 14%, transparent);background-position:center;background-size:cover;cursor:pointer}
     .yt::after{content:'▶'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:42px; line-height:1; width:68px; height:68px; border-radius:50%; display:grid; place-items:center; background:rgba(0,0,0,.55); color:white}
+    .yt.playing::after{display:none}
   </style>
 </head>
 <body>
@@ -193,7 +194,7 @@
               </figure>
             </div>
           </details>
-          $1
+          <details class="cardlike"><summary><strong>3) Deep RL for humanoid motion imitation</strong></summary>
             <ul>
               <li>Trained a simulated humanoid in Isaac Gym with PPO to imitate two clips: walking and cartwheel.</li>
               <li>Implemented reward terms: base height, joint angles, base orientation, base velocity, end‑effector position, and action smoothness.</li>
@@ -300,6 +301,8 @@
       } else {
         renderHome();
       }
+      // Initialize YouTube placeholders for any newly-rendered content
+      initYouTubePlaceholders(document);
       scrollTo({top:0, behavior:'instant'});
     }
 
@@ -420,7 +423,9 @@
     if(!el) return;
     const id = el.dataset.ytid || extractYouTubeId(el.getAttribute('data-yt')||el.getAttribute('data-ytid'));
     if(!id) return;
-    el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    el.classList.add('playing');
+    el.style.backgroundImage = 'none';
+    el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
   });
 
   // Extract YouTube ID from full URL or raw ID
@@ -442,6 +447,18 @@
       return String(s);
     }
     return String(s);
+  }
+
+  // Initialize thumbnails/data-ytid for any .yt nodes within a scope
+  function initYouTubePlaceholders(scope=document){
+    scope.querySelectorAll('.yt').forEach(el=>{
+      const val = el.getAttribute('data-yt') || el.getAttribute('data-ytid');
+      const id = extractYouTubeId(val);
+      if(id){
+        el.style.backgroundImage = `url('https://img.youtube.com/vi/${id}/hqdefault.jpg')`;
+        el.dataset.ytid = id;
+      }
+    });
   }
 
 </script>
