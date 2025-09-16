@@ -196,68 +196,79 @@
         videos: []
       },
       {
-        slug: 'planning-and-decision-making',
-        title: 'Planning & Decision Making for Autonomous Robots — Course Project',
-        cover: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41e5?q=80&w=1600&auto=format&fit=crop',
-        summary: 'Six subparts: Graph search, Dynamic programming, Dubins path, Collision checking, Spaceship, Highway driving.',
-        date: '',
-        tags: ['Course Project','Planning','Decision‑Making','Graph Search','A*','UCS','Dynamic Programming','Dubins','SCvx'],
-        bodyHtml: `
-          <p>Algorithms and decision‑making for navigation and control, from graph search to optimal control. Below are concise takeaways focused on what I built and why it matters.</p>
+  slug: 'planning-and-decision-making',
+  title: 'Planning & Decision Making for Autonomous Robots — Course Project',
+  cover: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41e5?q=80&w=1600&auto=format&fit=crop',
+  summary: 'Six subparts: Graph search, Dynamic programming, Dubins path, Collision checking, Spaceship, Highway driving.',
+  date: '',
+  tags: ['Course Project','Planning','Decision-Making','Graph Search','A*','UCS','Dynamic Programming'],
+  bodyHtml: `
+    <p>Algorithms and decision-making pipelines for navigation and control. Below are compact subparts focusing on what I built and evaluated.</p>
 
-          <h3>Subparts</h3>
+    <h3>Subparts</h3>
 
-          <details class="cardlike"><summary><strong>1) Graph Search (BFS/DFS/IDDFS + UCS/A*)</strong></summary>
-            <ul>
-              <li>Built classic search and shortest‑path planners with deterministic expansions (sorted neighbors, no duplicates).</li>
-              <li>Returned both the path and the opened‑order; A* used an admissible time lower‑bound (great‑circle / max speed) to cut expansions.</li>
-            </ul>
-          </details>
+    <details class="cardlike"><summary><strong>1) Graph Search (BFS/DFS/IDDFS + UCS/A*)</strong></summary>
+      <ul>
+        <li>Implemented classic search (BFS, DFS, Iterative Deepening) and shortest-path search (UCS, A*).</li>
+        <li>Deterministic neighbor handling: sort new neighbors, avoid duplicates; return <em>Path</em> and <em>OpenedNodes</em>.</li>
+        <li>A*: admissible time lower bound = great-circle distance / max speed.</li>
+      </ul>
+    </details>
 
-          <details class="cardlike"><summary><strong>2) Dynamic Programming (Value / Policy Iteration)</strong></summary>
-            <ul>
-              <li>Modeled a Grid MDP (stochastic motion, teleportation, breakdowns, restart costs).</li>
-              <li>Computed optimal value map and one optimal policy via Value Iteration and Policy Iteration.</li>
-            </ul>
-          </details>
+    <details class="cardlike"><summary><strong>2) Dynamic Programming (Value / Policy Iteration)</strong></summary>
+      <ul>
+        <li>Grid MDP with stochastic motion, wormholes, breakdown/abandon, and time/fuel costs.</li>
+        <li>Implemented value iteration and policy iteration; outputs optimal value map and policy.</li>
+      </ul>
+    </details>
 
-          <details class="cardlike"><summary><strong>3) Dubins Path</strong></summary>
-            <ul>
-              <li>Implemented shortest‑path curves for a unicycle robot under curvature limits (LSL, RSR, LSR, RSL, RLR, LRL).</li>
-              <li>Produced feasible, heading‑constrained seeds for local planners; sampled/smoothed and checked for obstacle clearance.</li>
-            </ul>
-          </details>
+    <details class="cardlike"><summary><strong>3) Dubins Path</strong></summary>
+      <ul>
+        <li>Generated curvature-bounded (Dubins) paths for a car-like robot under minimum turn radius.</li>
+        <li>Integrated into local planning to compare path families (RSR/RSL/LSR/LSL/…); picked shortest feasible.</li>
+      </ul>
+    </details>
 
-          <details class="cardlike"><summary><strong>4) Collision Checking</strong></summary>
-            <ul>
-              <li>Wrote geometric collision primitives using the Separating Axis Theorem: projection, candidate axes, segment overlap; polygon–polygon and polygon–circle.</li>
-              <li>Added multiple planners’ backends: baseline geometric checks, occupancy‑grid rasterization, R‑tree (STRTree) acceleration, robot‑frame checks, and safety certificates.</li>
-              <li>API returns indices of colliding path segments for a circle robot; distinct implementations to compare speed vs. accuracy.</li>
-            </ul>
-          </details>
+    <details class="cardlike"><summary><strong>4) Collision Checking</strong></summary>
+      <ul>
+        <li>Built SAT-based polygon/circle checks, plus occupancy-grid and R-tree variants for speed.</li>
+        <li>Also implemented robot-frame checks and safety-certificate acceleration.</li>
+        <li>Used to prune invalid states/edges in planners.</li>
+      </ul>
+    </details>
 
-          <details class="cardlike"><summary><strong>5) Spaceship</strong></summary>
-            <ul>
-              <li>Built a planning stack around sequential convexification (SCvx) to generate thrust and gimbal commands.</li>
-              <li>Handled constraints: docking pose/velocity, thrust/angle limits and slew‑rate, time budget, fuel usage, and obstacle avoidance.</li>
-              <li>Evaluated across three scenarios: planets only, planet+moving satellites (static goal), and docking with moving bodies.</li>
-            </ul>
-            <div class="media-grid">
-              <figure class="third"><div class="yt" data-yt="https://youtu.be/VIDEO_ID_1"></div><figcaption>Scenario 1 — Planets, fixed docking</figcaption></figure>
-              <figure class="third"><div class="yt" data-yt="https://youtu.be/VIDEO_ID_2"></div><figcaption>Scenario 2 — Planet + satellites</figcaption></figure>
-              <figure class="third"><div class="yt" data-yt="https://youtu.be/VIDEO_ID_3"></div><figcaption>Scenario 3 — Docking with moving bodies</figcaption></figure>
-            </div>
-          </details>
+    <details class="cardlike"><summary><strong>5) Spaceship (SCvx planning + closed-loop)</strong></summary>
+      <ul>
+        <li>Implemented a sequential convexification (SCvx) stack with zero/first-order holds for linearization.</li>
+        <li>Constraints: thrust/angle/rate limits, arrival pose/vel, time budget, obstacle avoidance, mass/fuel.</li>
+        <li><strong>Scenarios</strong>: 1) Docking through planets, 2) Dodging a planet + moving satellites to a static goal, 3) <u>Docking with moving satellites</u>.</li>
+      </ul>
+      <div class="media-grid">
+        <figure class="third">
+          <div class="yt" data-yt="https://youtube.com/shorts/DGAiyCBHpvc?feature=share"></div>
+          <figcaption>Scenario 1 — Docking through planets</figcaption>
+        </figure>
+        <figure class="third">
+          <div class="yt" data-yt="https://youtube.com/shorts/BQusGgvJpuU?feature=share"></div>
+          <figcaption>Scenario 2 — Static goal with moving satellites</figcaption>
+        </figure>
+        <figure class="third">
+          <div class="yt" data-yt="https://youtube.com/shorts/aVQ-uDb_ZPU?feature=share"></div>
+          <figcaption>Scenario 3 — Docking with moving satellites</figcaption>
+        </figure>
+      </div>
+    </details>
 
-          <details class="cardlike"><summary><strong>6) Highway Driving</strong></summary>
-            <ul>
-              <li>Lane‑level planner combining simple behavior planning with local feasibility checks; tuned trade‑offs for comfort/safety.</li>
-            </ul>
-          </details>
-        `,
-        images: [],
-        videos: []
-      },
+    <details class="cardlike"><summary><strong>6) Highway Driving</strong></summary>
+      <ul>
+        <li>Lane-level planner: behavior (keep/prepare/perform lane change) + local feasibility/costs.</li>
+      </ul>
+    </details>
+  `,
+  images: [],
+  videos: []
+},
+
       {
         slug: 'mobile-health-activity-monitoring',
         title: 'Mobile Health & Activity Monitoring — Course Project',
