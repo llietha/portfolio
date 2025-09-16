@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -260,8 +262,13 @@
     </details>
 
     <details class="cardlike"><summary><strong>6) Highway Driving</strong></summary>
+      <p>Built a lane‑change planning & control stack for an autonomous car in mixed traffic with unknown human policies (CommonRoad lanelets, kinematic bicycle, closed‑loop simulator).</p>
       <ul>
-        <li>Lane-level planner: behavior (keep/prepare/perform lane change) + local feasibility/costs.</li>
+        <li>Hierarchical planner: behavior (keep/prepare/perform lane change) + local trajectory scoring optimizing TTC risk, lane‑change time, comfort, and rule compliance.</li>
+        <li>360° LiDAR‑style observations with occlusions; constant‑velocity prediction with safety margins.</li>
+        <li>Constraint handling & continuous collision checks against lane geometry and moving vehicles.</li>
+        <li>Split planning/control rates (plan slower, control 10 Hz) with kinematic‑bicycle tracking.</li>
+        <li>Benchmarked on basic, dense, and near‑exit‑merge scenarios vs KPIs (collision/success, TTC, time, comfort, compute).</li>
       </ul>
       <div class="media-grid">
         <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/gGNUKM6nwdQ?feature=share"></div></div>
@@ -289,13 +296,18 @@
       },
       {
         slug: 'introduction-to-mechatronics',
-        title: 'Introduction to Mechatronics — Course Project',
+        title: 'Introduction to Robotics and Mechatronics — Course Project',
         cover: 'https://images.unsplash.com/photo-1581090468281-4bee9eba2a27?q=80&w=1600&auto=format&fit=crop',
         summary: 'Designed and built a mechatronic prototype with embedded control.',
         date: '',
-        tags: ['Course Project','Mechatronics','Embedded'],
+        tags: ['Course Project','Mechatronics','Embedded','Robotics'],
         bodyHtml: `
-          <p><strong>Replace me:</strong> Hardware stack, control approach, fabrication, and demo video.</p>
+          <p>Focused on programming, modeling, and control for a <em>ball‑balancing robot</em> (hardware provided — I didn’t design or assemble it). I brought up an ESP32 control stack, interfaced a Pixy2 camera over SPI, and calibrated pixel‑to‑world coordinates. I derived the 3‑RRS plate inverse kinematics to convert desired tilt into servo commands, modeled the ball‑on‑plate dynamics and linearized about zero tilt, then designed and tuned a discrete PID with anti‑windup and rate/limit handling. To account for ~20 ms sensing latency and ≈60 Hz measurements, I added filtering and latency‑aware logic. The result is stable closed‑loop tracking of set‑points and circular trajectories with robust disturbance rejection.</p>
+          <div class="media-grid">
+            <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/Yji1pZ6IBtU?feature=share"></div></div>
+            <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/nKngOLTO-3A?feature=share"></div></div>
+            <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/nKngOLTO-3A?feature=share"></div></div>
+          </div>
         `,
         images: [],
         videos: []
@@ -519,6 +531,3 @@
   </script>
 </body>
 </html>
-
-
-
