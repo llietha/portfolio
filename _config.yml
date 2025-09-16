@@ -1,0 +1,40 @@
+# Jekyll configuration for GitHub Pages
+title: Engineering Portfolio
+description: Projects and research portfolio by Luca Lietha
+url: "https://llietha.github.io"
+baseurl: "/portfolio"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: null
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Exclude files from processing
+exclude:
+  - node_modules/
+  - .tmp/
+  - .github/
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+
+# Include files that start with underscore
+include:
+  - _site
+
+# Serve settings (for local development)
+host: 0.0.0.0
+port: 4000
+
+# Collection defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
