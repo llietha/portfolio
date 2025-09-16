@@ -88,7 +88,7 @@
     .detail details{border:1px solid color-mix(in oklab, var(--text) 16%, transparent); background:var(--card); padding:12px 14px; border-radius:14px; margin:12px 0}
     .detail details[open]{box-shadow: var(--shadow)}
     .yt{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:1px solid color-mix(in oklab, var(--text) 14%, transparent);background-position:center;background-size:cover;cursor:pointer}
-    .yt::after{content:'▶'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:42px; line-height:1; width:68px; height:68px; border-radius:50%; display:grid; place-items:center; background:rgba(0,0,0,.55); color:white}
+    .yt::after{content:'\25B6'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:42px; line-height:1; width:68px; height:68px; border-radius:50%; display:grid; place-items:center; background:rgba(0,0,0,.55); color:white}
     .yt.playing::after{display:none}
   </style>
 </head>
@@ -112,28 +112,28 @@
   <script>
     // ---------------------
     // 1) PROJECT DATA
-    // Edit this array to add your projects. Keep 'slug' unique.
-    // For images/videos, you can use absolute URLs or put files next to this HTML and reference by relative path.
     // ---------------------
     const projects = [
       {
         slug: 'bachelor-thesis',
-        title: 'Bachelor Thesis',
+        title: 'Bachelor Thesis: Model Predictive Contouring Control with Uncertainty Estimation using Deep Evidential Koopman Operators',
         cover: 'https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1600&auto=format&fit=crop',
-        summary: 'Undergraduate thesis — replace with your topic and 1–2 line outcome.',
+        summary: 'Extended Deep Evidential Koopman Operators with MPCC for uncertainty-aware path tracking in autonomous robots.',
         date: '',
-        tags: ['Thesis','Research'],
+        tags: ['Thesis','Research','Control','Robotics','Optimization','Uncertainty'],
         bodyHtml: `
-          <p><strong>Replace me:</strong> Briefly state the problem, your approach, and the main results/metrics. Add 3–5 bullet highlights.</p>
+          <p>In my bachelor thesis, I extended the <em>Deep Evidential Koopman Operator</em> framework to enable uncertainty-aware path tracking for autonomous robots. Specifically, I:</p>
           <ul>
-            <li>Objective: …</li>
-            <li>Methods: …</li>
-            <li>Key result: …</li>
+            <li>Integrated <strong>Model Predictive Contouring Control (MPCC)</strong> into the existing Koopman control framework to allow robots to follow a reference path while avoiding regions of high <em>epistemic uncertainty</em>.</li>
+            <li>Developed a <strong>path generation module</strong> for static global trajectories compatible with the contouring control formulation.</li>
+            <li>Implemented and tested the system in simulation, demonstrating its ability to accurately follow paths, handle position constraints, and deviate safely from paths in areas with high uncertainty.</li>
           </ul>
+          <p>This work combines control theory, uncertainty quantification, and optimization to improve the safety and reliability of learning‑based robotic controllers.</p>
+          <div class="cta">
+            <a class="btn" href="portfolio/assetsforportfolio/Luca_Lietha___Bachelor_Thesis.pdf" download target="_blank" rel="noopener">Download Thesis (PDF)</a>
+          </div>
         `,
-        images: [
-          {src:'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop', span:'wide', alt:'Thesis illustration'}
-        ],
+        images: [],
         videos: []
       },
       {
@@ -146,9 +146,9 @@
         bodyHtml: `
           <p>This course introduces the mathematical foundations and computational tools for generating motion for digital humans, virtual creatures, and robots. It blends applied mathematics, control theory, and machine learning, and is illustrated through locomotion controllers, trajectory optimization, and deep‑RL‑based motion synthesis.</p>
 
-<p><strong>Topics covered:</strong> kinematic modeling; unconstrained/constrained optimization and inverse kinematics; sensitivity analysis; trajectory optimization; feedback control and locomotion; foundations of deep reinforcement learning; learning methods for motion synthesis; invited lecture.</p>
+          <p><strong>Topics covered:</strong> kinematic modeling; unconstrained/constrained optimization and inverse kinematics; sensitivity analysis; trajectory optimization; feedback control and locomotion; foundations of deep reinforcement learning; learning methods for motion synthesis; invited lecture.</p>
 
-<h3>Subprojects</h3>
+          <h3>Subprojects</h3>
 
           <details class="cardlike"><summary><strong>1) Kinematic walking controller</strong></summary>
             <ul>
@@ -158,62 +158,37 @@
               <li>Validated in quadruped/hexapod simulation and deployed on SpiderPi hexapod hardware.</li>
             </ul>
             <div class="media-grid">
-              <figure class="third">
-  <div class="yt" data-yt="https://youtu.be/uCh3qL2x7Hs" style="background-image:url('https://img.youtube.com/vi/uCh3qL2x7Hs/hqdefault.jpg')"></div>
-  <figcaption>Kinematic walking controller for a quadruped robot</figcaption>
-</figure>
-              <figure class="third">
-  <div class="yt" data-yt="https://youtu.be/M8dzODGkXxI" style="background-image:url('https://img.youtube.com/vi/M8dzODGkXxI/hqdefault.jpg')"></div>
-  <figcaption>Kinematic walking controller for a Hexapod robot</figcaption>
-</figure>
-              <figure class="third">
-  <div class="yt" data-yt="https://youtube.com/shorts/ZUIcOtcyFh8?feature=share" style="background-image:url('https://img.youtube.com/vi/ZUIcOtcyFh8/hqdefault.jpg')"></div>
-  <figcaption>Kinematic walking controller for a Hexapod robot deployed on hardware</figcaption>
-</figure>
+              <figure class="third"><div class="yt" data-yt="https://youtu.be/uCh3qL2x7Hs"></div><figcaption>Kinematic walking controller for a quadruped robot</figcaption></figure>
+              <figure class="third"><div class="yt" data-yt="https://youtu.be/M8dzODGkXxI"></div><figcaption>Kinematic walking controller for a Hexapod robot</figcaption></figure>
+              <figure class="third"><div class="yt" data-yt="https://youtube.com/shorts/ZUIcOtcyFh8?feature=share"></div><figcaption>Hexapod controller on hardware</figcaption></figure>
             </div>
           </details>
+
           <details class="cardlike"><summary><strong>2) Trajectory optimization for quadruped robots</strong></summary>
             <ul>
               <li>Built a multiple‑shooting trajectory optimizer in <em>CasADi</em> using a single rigid‑body model; ran experiments at 50&nbsp;Hz.</li>
-              <li>Implemented the objective to follow kinematic reference motions with added smoothness and continuity costs.</li>
-              <li>Added constraints: dynamics and initial state; ground contact (no penetration), zero force in swing, and no foot‑skating during stance.</li>
-              <li>For walking with partial references, generated the missing foot paths and enforced a shoulder‑plane constraint to prevent side motion (no abduction).</li>
-              <li>For jumping, added a leg‑length constraint to stop unrealistic extension and corrected the reference so take‑off and flight are feasible.</li>
-              <li>For bounding, enforced a friction pyramid so horizontal forces disappear in swing and stay within friction limits in stance.</li>
-              <li>Extended to backflips by creating leg references for a 180‑degree flip and building a 360‑degree flip from keyframes.</li>
-              <li>Evaluation in MuJoCo: exported CSVs for playback, implemented a joint PD controller, computed feedforward joint torques via the Jacobian transpose, and combined PD + feedforward with brief behavior notes.</li>
+              <li>Implemented objectives to track kinematic references with smoothness/continuity costs.</li>
+              <li>Added constraints: system dynamics; initial state; ground contact (no penetration), zero swing forces, no foot‑skating; friction pyramid.</li>
+              <li>Generated missing foot paths for partial references; enforced shoulder‑plane constraint.</li>
+              <li>Extended to jumps/bounds/backflips with feasibility fixes (leg‑length, keyframes).</li>
+              <li>Playback + control in MuJoCo with PD + feedforward torques from Jacobian transpose.</li>
             </ul>
             <div class="media-grid">
-              <figure class="half">
-                <div class="yt" data-yt="https://youtu.be/tKlLVA-S8p4" style="background-image:url('https://img.youtube.com/vi/tKlLVA-S8p4/hqdefault.jpg')"></div>
-                <figcaption>Playback of optimized trajectories in MuJoCo.</figcaption>
-              </figure>
-              <figure class="half">
-                <div class="yt" data-yt="https://youtu.be/3H1YKNTbXBA" style="background-image:url('https://img.youtube.com/vi/3H1YKNTbXBA/hqdefault.jpg')"></div>
-                <figcaption>Tracking optimized trajectories using feedforward (FF) + PID.</figcaption>
-              </figure>
+              <figure class="half"><div class="yt" data-yt="https://youtu.be/tKlLVA-S8p4"></div><figcaption>Playback of optimized trajectories in MuJoCo</figcaption></figure>
+              <figure class="half"><div class="yt" data-yt="https://youtu.be/3H1YKNTbXBA"></div><figcaption>Tracking optimized trajectories with FF + PID</figcaption></figure>
             </div>
           </details>
+
           <details class="cardlike"><summary><strong>3) Deep RL for humanoid motion imitation</strong></summary>
             <ul>
-              <li>Trained a simulated humanoid in Isaac Gym with PPO to imitate two clips: walking and cartwheel.</li>
-              <li>Implemented reward terms: base height, joint angles, base orientation, base velocity, end‑effector position, and action smoothness.</li>
-              <li>Added a phase variable to sync each step to the correct frame of the motion clip.</li>
-              <li>Implemented reference state initialization (RSI) to start episodes from random frames, so the policy learns both handstand entry and recovery.</li>
-              <li>Used quaternion‑based orientation in rewards to avoid gimbal lock during upside‑down poses.</li>
-              <li>Defined observations (velocities, joint offsets/velocities, orientation, previous action, base height, phase) and actions as target joint angles tracked by the built‑in position controller.</li>
-              <li>Ran training on an AWS GPU inside Docker and logged progress to Weights & Biases; monitored curves and videos and tuned terms until stable imitation.</li>
-              <li>Evaluated policies with the provided script and saved animations and plots for the results section.</li>
+              <li>Trained a simulated humanoid in Isaac Gym with PPO to imitate walking and a cartwheel.</li>
+              <li>Designed rewards (pose, orientation, velocities, end‑effectors, smoothness) and a phase variable.</li>
+              <li>Used Reference State Initialization (RSI) and quaternion orientation to avoid gimbal lock.</li>
+              <li>Logged runs to Weights &amp; Biases; tuned until stable imitation; exported videos/plots.</li>
             </ul>
             <div class="media-grid">
-              <figure class="half">
-  <div class="yt" data-yt="https://youtu.be/oZsgSzABSHc" style="background-image:url('https://img.youtube.com/vi/oZsgSzABSHc/hqdefault.jpg')"></div>
-  <figcaption>Walking motion.</figcaption>
-</figure>
-              <figure class="half">
-  <div class="yt" data-yt="https://youtu.be/w-ADT8fwUsE" style="background-image:url('https://img.youtube.com/vi/w-ADT8fwUsE/hqdefault.jpg')"></div>
-  <figcaption>Cartwheel motion.</figcaption>
-</figure>
+              <figure class="half"><div class="yt" data-yt="https://youtu.be/oZsgSzABSHc"></div><figcaption>Walking motion</figcaption></figure>
+              <figure class="half"><div class="yt" data-yt="https://youtu.be/w-ADT8fwUsE"></div><figcaption>Cartwheel motion</figcaption></figure>
             </div>
           </details>
         `,
@@ -224,11 +199,61 @@
         slug: 'planning-and-decision-making',
         title: 'Planning & Decision Making for Autonomous Robots — Course Project',
         cover: 'https://images.unsplash.com/photo-1517059224940-d4af9eec41e5?q=80&w=1600&auto=format&fit=crop',
-        summary: 'Built planners / POMDP/RL pipelines for autonomous navigation tasks.',
+        summary: 'Six subparts: Graph search, Dynamic programming, Dubins path, Collision checking, Spaceship, Highway driving.',
         date: '',
-        tags: ['Course Project','Planning','Decision‑Making'],
+        tags: ['Course Project','Planning','Decision‑Making','Graph Search','A*','UCS','Dynamic Programming','Dubins','SCvx'],
         bodyHtml: `
-          <p><strong>Replace me:</strong> Problem setup, algorithms (e.g., A*, RRT*, MPC, POMDP), and results.</p>
+          <p>Algorithms and decision‑making for navigation and control, from graph search to optimal control. Below are concise takeaways focused on what I built and why it matters.</p>
+
+          <h3>Subparts</h3>
+
+          <details class="cardlike"><summary><strong>1) Graph Search (BFS/DFS/IDDFS + UCS/A*)</strong></summary>
+            <ul>
+              <li>Built classic search and shortest‑path planners with deterministic expansions (sorted neighbors, no duplicates).</li>
+              <li>Returned both the path and the opened‑order; A* used an admissible time lower‑bound (great‑circle / max speed) to cut expansions.</li>
+            </ul>
+          </details>
+
+          <details class="cardlike"><summary><strong>2) Dynamic Programming (Value / Policy Iteration)</strong></summary>
+            <ul>
+              <li>Modeled a Grid MDP (stochastic motion, teleportation, breakdowns, restart costs).</li>
+              <li>Computed optimal value map and one optimal policy via Value Iteration and Policy Iteration.</li>
+            </ul>
+          </details>
+
+          <details class="cardlike"><summary><strong>3) Dubins Path</strong></summary>
+            <ul>
+              <li>Implemented shortest‑path curves for a unicycle robot under curvature limits (LSL, RSR, LSR, RSL, RLR, LRL).</li>
+              <li>Produced feasible, heading‑constrained seeds for local planners; sampled/smoothed and checked for obstacle clearance.</li>
+            </ul>
+          </details>
+
+          <details class="cardlike"><summary><strong>4) Collision Checking</strong></summary>
+            <ul>
+              <li>Wrote geometric collision primitives using the Separating Axis Theorem: projection, candidate axes, segment overlap; polygon–polygon and polygon–circle.</li>
+              <li>Added multiple planners’ backends: baseline geometric checks, occupancy‑grid rasterization, R‑tree (STRTree) acceleration, robot‑frame checks, and safety certificates.</li>
+              <li>API returns indices of colliding path segments for a circle robot; distinct implementations to compare speed vs. accuracy.</li>
+            </ul>
+          </details>
+
+          <details class="cardlike"><summary><strong>5) Spaceship</strong></summary>
+            <ul>
+              <li>Built a planning stack around sequential convexification (SCvx) to generate thrust and gimbal commands.</li>
+              <li>Handled constraints: docking pose/velocity, thrust/angle limits and slew‑rate, time budget, fuel usage, and obstacle avoidance.</li>
+              <li>Evaluated across three scenarios: planets only, planet+moving satellites (static goal), and docking with moving bodies.</li>
+            </ul>
+            <div class="media-grid">
+              <figure class="third"><div class="yt" data-yt="https://youtu.be/VIDEO_ID_1"></div><figcaption>Scenario 1 — Planets, fixed docking</figcaption></figure>
+              <figure class="third"><div class="yt" data-yt="https://youtu.be/VIDEO_ID_2"></div><figcaption>Scenario 2 — Planet + satellites</figcaption></figure>
+              <figure class="third"><div class="yt" data-yt="https://youtu.be/VIDEO_ID_3"></div><figcaption>Scenario 3 — Docking with moving bodies</figcaption></figure>
+            </div>
+          </details>
+
+          <details class="cardlike"><summary><strong>6) Highway Driving</strong></summary>
+            <ul>
+              <li>Lane‑level planner combining simple behavior planning with local feasibility checks; tuned trade‑offs for comfort/safety.</li>
+            </ul>
+          </details>
         `,
         images: [],
         videos: []
@@ -289,7 +314,6 @@
 
     // ---------------------
     // 2) TINY ROUTER
-    // Routes: #/  and  #/project/:slug  and  #about
     // ---------------------
     const app = document.getElementById('app');
 
@@ -301,22 +325,24 @@
       } else {
         renderHome();
       }
-      // Initialize YouTube placeholders for any newly-rendered content
       initYouTubePlaceholders(document);
       scrollTo({top:0, behavior:'instant'});
     }
 
     window.addEventListener('hashchange', route);
-    window.addEventListener('DOMContentLoaded', ()=>{ document.getElementById('year').textContent = new Date().getFullYear(); route(); });
+    window.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('year').textContent = new Date().getFullYear();
+      route();
+      validateProjects();
+    });
 
-    // Build YouTube thumbnails from data-yt / data-ytid on load
     window.addEventListener('DOMContentLoaded', ()=>{
       document.querySelectorAll('.yt').forEach(el=>{
         const val = el.getAttribute('data-yt') || el.getAttribute('data-ytid');
         const id = extractYouTubeId(val);
         if(id){
           el.style.backgroundImage = `url('https://img.youtube.com/vi/${id}/hqdefault.jpg')`;
-          el.dataset.ytid = id; // normalize
+          el.dataset.ytid = id;
         }
       });
     });
@@ -347,7 +373,7 @@
           <div class="content">
             <div class="title">${escapeHtml(p.title)}</div>
             <div class="summary">${escapeHtml(p.summary)}</div>
-            <div class="tags">${(p.tags||[]).map(t=>`<span class='tag'>${escapeHtml(t)}</span>`).join('')}</div>
+            <div class="tags">${(p.tags||[]).map(t=>'<span class="tag">'+escapeHtml(t)+'</span>').join('')}</div>
           </div>`;
         grid.appendChild(card);
       });
@@ -387,7 +413,6 @@
     }
 
     function renderMedia(p){
-      const blocks = [];
       const imgs = (p.images||[]).map(img=>{
         const span = img.span==='half' ? 'half' : 'wide';
         return `<div class="${span}"><img src="${img.src}" alt="${escapeHtml(img.alt||p.title)}" loading="lazy"></div>`
@@ -407,60 +432,75 @@
     }
 
     // ---------------------
-    // 4) HELPERS
+    // 4) HELPERS & SELF-TESTS
     // ---------------------
     function escapeHtml(str){
       return String(str).replace(/[&<>"']/g, s=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[s]));
     }
 
-    // Optional: personalize name by editing both owner spans here (or remove this and hardcode above).
+    function validateProjects(){
+      try{
+        console.assert(Array.isArray(projects), 'projects should be an array');
+        const seen = new Set();
+        projects.forEach((p,i)=>{
+          console.assert(p && typeof p==='object', `Project[${i}] should be object`);
+          console.assert(p.slug, `Project[${i}] missing slug`);
+          console.assert(!seen.has(p.slug), `Duplicate slug ${p.slug}`);
+          seen.add(p.slug);
+          console.assert(typeof p.title==='string', `Project[${i}] missing title`);
+          console.assert(typeof p.bodyHtml==='string', `Project[${i}] missing bodyHtml`);
+        });
+        console.log('Project validation OK');
+      }catch(e){
+        console.error('Project validation failed', e);
+      }
+    }
+
+    // YouTube lazy embeds (click to load)
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('.yt');
+      if(!el) return;
+      const id = el.dataset.ytid || extractYouTubeId(el.getAttribute('data-yt')||el.getAttribute('data-ytid'));
+      if(!id) return;
+      el.classList.add('playing');
+      el.style.backgroundImage = 'none';
+      el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    });
+
+    function extractYouTubeId(s){
+      if(!s) return '';
+      try{
+        const u = new URL(s, 'https://example.com');
+        const host = (u.host||'').replace(/^www\./,'');
+        if(host.includes('youtube.com')){
+          if(u.pathname.startsWith('/watch')) return u.searchParams.get('v')||'';
+          if(u.pathname.startsWith('/shorts/')) return u.pathname.split('/')[2]||'';
+          if(u.pathname.startsWith('/embed/')) return u.pathname.split('/')[2]||'';
+        }
+        if(host==='youtu.be'){
+          return u.pathname.slice(1).split('/')[0]||'';
+        }
+      }catch(e){
+        return String(s);
+      }
+      return String(s);
+    }
+
+    function initYouTubePlaceholders(scope=document){
+      scope.querySelectorAll('.yt').forEach(el=>{
+        const val = el.getAttribute('data-yt') || el.getAttribute('data-ytid');
+        const id = extractYouTubeId(val);
+        if(id){
+          el.style.backgroundImage = `url('https://img.youtube.com/vi/${id}/hqdefault.jpg')`;
+          el.dataset.ytid = id;
+        }
+      });
+    }
+
     document.getElementById('owner').textContent = 'Your Name';
     const ownerInline = document.getElementById('owner-inline');
     if(ownerInline) ownerInline.textContent = 'Your Name';
-    // YouTube lazy embeds (click to load)
-  document.addEventListener('click', (e) => {
-    const el = e.target.closest('.yt');
-    if(!el) return;
-    const id = el.dataset.ytid || extractYouTubeId(el.getAttribute('data-yt')||el.getAttribute('data-ytid'));
-    if(!id) return;
-    el.classList.add('playing');
-    el.style.backgroundImage = 'none';
-    el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-  });
-
-  // Extract YouTube ID from full URL or raw ID
-  function extractYouTubeId(s){
-    if(!s) return '';
-    try{
-      const u = new URL(s, 'https://example.com');
-      const host = (u.host||'').replace(/^www\./,'');
-      if(host.includes('youtube.com')){
-        if(u.pathname.startsWith('/watch')) return u.searchParams.get('v')||'';
-        if(u.pathname.startsWith('/shorts/')) return u.pathname.split('/')[2]||'';
-        if(u.pathname.startsWith('/embed/')) return u.pathname.split('/')[2]||'';
-      }
-      if(host==='youtu.be'){
-        return u.pathname.slice(1).split('/')[0]||'';
-      }
-    }catch(e){
-      // not a URL: assume it's already an ID
-      return String(s);
-    }
-    return String(s);
-  }
-
-  // Initialize thumbnails/data-ytid for any .yt nodes within a scope
-  function initYouTubePlaceholders(scope=document){
-    scope.querySelectorAll('.yt').forEach(el=>{
-      const val = el.getAttribute('data-yt') || el.getAttribute('data-ytid');
-      const id = extractYouTubeId(val);
-      if(id){
-        el.style.backgroundImage = `url('https://img.youtube.com/vi/${id}/hqdefault.jpg')`;
-        el.dataset.ytid = id;
-      }
-    });
-  }
-
-</script>
+  </script>
 </body>
 </html>
+
