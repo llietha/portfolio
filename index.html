@@ -80,6 +80,7 @@
     .media-grid .wide{grid-column: span 12}
     .media-grid .half{grid-column: span 6}
     .media-grid .third{grid-column: span 4}
+    .media-grid .quarter{grid-column: span 3} 
     .media-grid figure{margin:0}
     .media-grid figcaption{font-size:13px;color:var(--muted);margin-top:6px}
     .yt iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
@@ -103,6 +104,18 @@
     .yt{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:1px solid color-mix(in oklab, var(--text) 14%, transparent);background-position:center;background-size:cover;cursor:pointer}
     .yt::after{content:'\25B6'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:42px; line-height:1; width:68px; height:68px; border-radius:50%; display:grid; place-items:center; background:rgba(0,0,0,.55); color:white}
     .yt.playing::after{display:none}
+      /* Scenario comparison (CSS-only tabs) */
+    .scenario-viewer{margin-top:12px}
+    .scenario-viewer .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 12px}
+    .scenario-viewer .tabs input{display:none}
+    .scenario-viewer .tabs label{padding:6px 10px;border:1px solid color-mix(in oklab, var(--text) 18%, transparent);border-radius:10px;color:var(--muted);cursor:pointer}
+    .scenario-viewer .tabs input:checked + label{background: color-mix(in oklab, var(--accent) 18%, transparent);color: var(--text);border-color: color-mix(in oklab, var(--accent) 45%, transparent)}
+    .scenario-viewer .panels .panel{display:none}
+    /* Show the selected scenario's panel */
+    #cc-s1:checked ~ .panels [data-for="cc-s1"],
+    #cc-s2:checked ~ .panels [data-for="cc-s2"],
+    #cc-s3:checked ~ .panels [data-for="cc-s3"],
+    #cc-s4:checked ~ .panels [data-for="cc-s4"]{display:block}
   </style>
 </head>
 <body>
@@ -339,12 +352,56 @@
       {
         slug: 'computational-control',
         title: 'Computational Control — Course Project',
-        cover: 'https://images.unsplash.com/photo-1488229297570-58520851e868?q=80&w=1600&auto=format&fit=crop',
-        summary: 'Optimization‑based control (e.g., LQR/MPC/DeePC) on benchmark tasks.',
+        cover: 'assetsforportfolio/COCO Project Picture.png',
+        summary: 'MPC vs. DeePC for dynamic speed limits on a 5‑region city; SUMO evaluation; measurable gains over baseline P.',
         date: '',
-        tags: ['Course Project','Control','Optimization'],
+        tags: ['Course Project','Control','Optimization','MPC','DeePC','Traffic','SUMO'],
         bodyHtml: `
-          <p><strong>Replace me:</strong> Model, constraints, solver, and performance versus baselines.</p>
+          <p><em>COCO City dynamic speed‑limit control.</em> I designed, implemented, and compared a model‑based MPC and a data‑driven DeePC controller for a five‑region macroscopic traffic network, evaluated in a SUMO closed‑loop simulator.</p>
+          <ul>
+            <li><strong>Problem:</strong> Morning inbound congestion; the baseline P controller can destabilize queues under demand surges.</li>
+            <li><strong>Model‑based (MPC):</strong> Linear network model → QP‑based MPC with horizon <em>N</em>, bounds on densities/speeds, soft constraints; objective trades off target densities and control effort. Tuned (<em>Q, R, N</em>) with warm starts.</li>
+            <li><strong>Data‑driven (DeePC):</strong> Past/future Hankel matrices from provided data; Tikhonov and projection regularizers; hyper‑parameters (λ<sub>y</sub>, λ<sub>g</sub>) via grid search. Robust to model mismatch.</li>
+            <li><strong>Evaluation:</strong> Scenarios <em>no control</em> vs <em>P</em> vs <em>MPC</em> vs <em>DeePC</em>. KPIs: mean travel time, total delay/stopped time, queue lengths, successful trips. Plots and GIF heatmaps summarize behavior.</li>
+            <li><strong>Outcome:</strong> Both MPC and DeePC outperformed no‑control and the P baseline; DeePC handled demand shifts best, MPC provided transparent constraint handling for deployment.</li>
+            <li><strong>Deliverables:</strong> Self‑contained Jupyter notebook (reproducible figures/tables) and a concise 5‑slide brief for non‑technical stakeholders.</li>
+          </ul>
+
+          <details class="cardlike"><summary><strong>Results — key outcomes & visuals</strong></summary>
+            <div class="media-grid">
+              <figure class="wide">
+                <img src="assetsforportfolio/COCO/metric(3).png" alt="KPIs across scenarios: No Controller, P, MPC, DeePC" loading="lazy"/>
+                <figcaption>Overall KPIs across all four scenarios (CO₂, travel time, waiting time, #vehicles).</figcaption>
+              </figure>
+
+              <figure class="half">
+                <img src="assetsforportfolio/COCO/plot(1).png" alt="Flow/ density comparison: P vs No Controller" loading="lazy"/>
+                <figcaption>Dynamics: <strong>P vs No Controller</strong> — effect of simple feedback vs no control.</figcaption>
+              </figure>
+              <figure class="half">
+                <img src="assetsforportfolio/COCO/plot(4).png" alt="Flow/ density comparison: P vs MPC vs DeePC" loading="lazy"/>
+                <figcaption>Dynamics: <strong>P vs MPC vs DeePC</strong> — model‑based vs data‑driven controllers.</figcaption>
+              </figure>
+
+              <figure class="quarter">
+                <img src="assetsforportfolio/COCO/no_control_demo_heatmap.gif" alt="No Controller — network evolution heatmap (GIF)"/>
+                <figcaption>No Controller — evolution</figcaption>
+              </figure>
+              <figure class="quarter">
+                <img src="assetsforportfolio/COCO/P_control_demo_heatmap.gif" alt="P Controller — network evolution (GIF)"/>
+                <figcaption>P — evolution</figcaption>
+              </figure>
+              <figure class="quarter">
+                <img src="assetsforportfolio/COCO/MPC_control_demo_heatmap.gif" alt="MPC — network evolution (GIF)"/>
+                <figcaption>MPC — evolution</figcaption>
+              </figure>
+              <figure class="quarter">
+                <img src="assetsforportfolio/COCO/DeePC_control_demo_heatmap.gif" alt="DeePC — network evolution (GIF)"/>
+                <figcaption>DeePC — evolution</figcaption>
+              </figure>
+            </div>
+            <p class="meta">Swap the two comparison plots to your exported files (suggested paths above). Keep filenames consistent for easy maintenance.</p>
+          </details>
         `,
         images: [],
         videos: []
@@ -352,7 +409,7 @@
       {
         slug: 'introduction-to-machine-learning',
         title: 'Introduction to Machine Learning — Course Project',
-        cover: 'assetsforportfolio/IML Project Picture.png',
+        cover: 'assetsforportfolio/IML_Project_Picture_smaller.png',
         summary: 'Built ML models for classification/regression with proper validation.',
         date: '',
         tags: ['Course Project','Machine Learning'],
