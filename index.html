@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Engineering Portfolio</title>
-  <meta name="description" content="Projects and research by <Your Name>." />
-  <meta property="og:title" content="Engineering Portfolio" />
-  <meta property="og:description" content="Projects and research portfolio." />
+  <title>Luca Lietha — Engineering Portfolio</title>
+  <meta name="description" content="Robotics, ML, and control projects by Luca Lietha. Focus on medical and environmental robotics." />
+  <meta property="og:title" content="Luca Lietha — Engineering Portfolio" />
+  <meta property="og:description" content="Selected projects in robotics, ML, and control." />
   <meta name="theme-color" content="#0ea5e9" />
   <style>
     :root{
@@ -80,7 +80,7 @@
     .media-grid .wide{grid-column: span 12}
     .media-grid .half{grid-column: span 6}
     .media-grid .third{grid-column: span 4}
-    .media-grid .quarter{grid-column: span 3} 
+    .media-grid .quarter{grid-column: span 3}
     .media-grid figure{margin:0}
     .media-grid figcaption{font-size:13px;color:var(--muted);margin-top:6px}
     .yt iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
@@ -98,7 +98,7 @@
     .hidden{display:none}
     .sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
       /* Avatar + compact sections + YouTube placeholders */
-    .avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow);border:1px solid color-mix(in oklab, var(--text) 18%, transparent)}
+    .avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:var(--shadow);border:1px solid color-mix(in oklab, var(--text) 18%, transparent); display:none;}
     .detail details{border:1px solid color-mix(in oklab, var(--text) 16%, transparent); background:transparent; padding:12px 14px; border-radius:14px; margin:12px 0}
     .detail details[open]{box-shadow: var(--shadow)}
     .yt{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;border:1px solid color-mix(in oklab, var(--text) 14%, transparent);background-position:center;background-size:cover;cursor:pointer}
@@ -121,6 +121,12 @@
     .notice{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; border:1px dashed color-mix(in oklab, var(--accent) 45%, transparent); background: color-mix(in oklab, var(--accent) 12%, transparent); margin: 8px 0 12px;}
     .notice .emoji{font-size:18px;}
     .muted-list{color:var(--muted); margin:8px 0 0 20px}
+
+    /* Focus styles for accessibility */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
@@ -132,7 +138,7 @@
       </a>
       <nav>
         <a href="#/">Projects</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">☀</button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="true">☀</button>
       </nav>
     </div>
   </header>
@@ -140,7 +146,7 @@
   <main class="wrap" id="app" aria-live="polite"></main>
 
   <footer>
-    <div class="wrap">© <span id="year"></span> <span id="owner">Your Name</span>. Built with a single HTML file. Host on GitHub Pages.</div>
+    <div class="wrap">© <span id="year"></span> <span id="owner">Luca Lietha</span>. Built with a single HTML file. Hosted on GitHub Pages.</div>
   </footer>
 
   <script>
@@ -192,7 +198,7 @@
             </ul>
             <div class="media-grid">
               <figure class="third"><div class="yt" data-yt="https://youtu.be/uCh3qL2x7Hs"></div><figcaption>Kinematic walking controller for a quadruped robot</figcaption></figure>
-              <figure class="third"><div class="yt" data-yt="https://youtu.be/M8dzODGkXxI"></div><figcaption>Kinematic walking controller for a Hexapod robot</figcaption></figure>
+              <figure class="third"><div class="yt" data-yt="https://youtu.be/M8dzODGkXxI"></div><figcaption>Kinematic walking controller for a hexapod robot</figcaption></figure>
               <figure class="third"><div class="yt" data-yt="https://youtube.com/shorts/ZUIcOtcyFh8?feature=share"></div><figcaption>Hexapod controller on hardware</figcaption></figure>
             </div>
           </details>
@@ -299,7 +305,7 @@
         <li>360° LiDAR‑style observations with occlusions; constant‑velocity prediction with safety margins.</li>
         <li>Constraint handling & continuous collision checks against lane geometry and moving vehicles.</li>
         <li>Split planning/control rates (plan slower, control 10 Hz) with kinematic‑bicycle tracking.</li>
-        <li>Benchmarked on basic, dense, and near‑exit‑merge scenarios vs KPIs (collision/success, TTC, time, comfort, compute).</li>
+        <li>Benchmarked on basic, dense, and near‑exit‑merge scenarios vs KPIs (collision/success, TTC, time, comfort, computation).</li>
       </ul>
       <div class="media-grid">
         <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/gGNUKM6nwdQ?feature=share"></div></div>
@@ -336,10 +342,10 @@
             <li><strong>Sensing &amp; bring‑up:</strong> ESP32 control stack; Pixy2 camera over SPI; pixel→world calibration for accurate position estimates.</li>
             <li><strong>Kinematics:</strong> Derived 3‑RRS plate inverse kinematics mapping desired plate tilt → servo commands.</li>
             <li><strong>Modeling:</strong> Formulated ball‑on‑plate dynamics and linearized about zero tilt for controller design.</li>
-            <li><strong>Control:</strong> Discrete PID with anti‑windup, rate limiting, and saturation handling; set‑point/trajectory generator (steps, circles).</li>
+            <li><strong>Control:</strong> Discrete PID with anti‑windup, rate limiting, and saturation handling; setpoint/trajectory generator (steps, circles).</li>
             <li><strong>Latency &amp; filtering:</strong> Compensated ~20 ms sensing delay; ≈60 Hz measurement loop; low‑pass and derivative filtering for noise/latency.</li>
             <li><strong>Robustness &amp; safety:</strong> Disturbance rejection (taps), watchdogs, soft bounds, and a failsafe flat‑plate mode.</li>
-            <li><strong>Outcome:</strong> Stable closed‑loop tracking of set‑points and circular trajectories; smooth recovery from perturbations (see videos below).</li>
+            <li><strong>Outcome:</strong> Stable closed‑loop tracking of setpoints and circular trajectories; smooth recovery from perturbations (see videos below).</li>
             <li><strong>Tech stack:</strong> C++/Arduino (ESP32), Python for calibration/logging, plotting‑driven tuning workflow.</li>
           </ul>
           <div class="media-grid">
@@ -465,7 +471,7 @@
       app.innerHTML = `
         <section class="hero">
           <div>
-            <h1>Hi, I’m <span id="owner-inline">Your Name</span> — building robots, embedded systems, and ML for the physical world.</h1>
+            <h1>I’m <span id="owner-inline">Luca</span>. I try to combine my interests in robotics, machine learning, and control with applications that benefit people and society. I’m specifically interested in medical and environmental robotics.</h1>
             <p>Below is a selection of recent projects. Click any card to see videos, images, and write‑ups.</p>
           </div>
         </section>
@@ -511,12 +517,18 @@
           <section class="detail"><h1>Not found</h1><p>We couldn’t find that project. Try the list again.</p></section>`;
         return;
       }
+
+      const metaBits = [];
+      if (p.date) metaBits.push(new Date(p.date).toLocaleDateString());
+      if (p.tags?.length) metaBits.push(p.tags.map(escapeHtml).join(' · '));
+      const metaHtml = metaBits.join(' · ');
+
       app.innerHTML = `
         <a class="back" href="#/"><span aria-hidden>←</span> Back to Projects</a>
         <article class="detail">
           <img class="cover" src="${p.cover}" alt="${escapeHtml(p.title)} cover" style="border-radius: var(--radius); border:1px solid color-mix(in oklab, var(--text) 14%, transparent)"/>
           <h1>${escapeHtml(p.title)}</h1>
-          <div class="meta">${p.date ? new Date(p.date).toLocaleDateString() : ''}${p.tags?.length? ' · ' + p.tags.map(escapeHtml).join(' · ') : ''}</div>
+          <div class="meta">${metaHtml}</div>
           <div class="body">${p.bodyHtml || ''}</div>
           ${renderMedia(p)}
         </article>
@@ -587,7 +599,12 @@
         localStorage.setItem(STORAGE_KEY, t);
         if(metaTheme){ metaTheme.setAttribute('content', t==='light' ? '#f8fafc' : '#0b0c10'); }
         const btn = document.getElementById('themeToggle');
-        if(btn){ btn.textContent = t==='light' ? '🌙' : '☀'; btn.title = t==='light' ? 'Switch to dark' : 'Switch to light'; }
+        if(btn){
+          const isDark = t === 'dark';
+          btn.textContent = t==='light' ? '🌙' : '☀';
+          btn.title = t==='light' ? 'Switch to dark' : 'Switch to light';
+          btn.setAttribute('aria-pressed', String(isDark));
+        }
       }
       const saved = localStorage.getItem(STORAGE_KEY);
       setTheme(saved || 'dark');
@@ -629,10 +646,11 @@
       });
     }
 
-    document.getElementById('owner').textContent = 'Your Name';
+    document.getElementById('owner').textContent = 'Luca Lietha';
     const ownerInline = document.getElementById('owner-inline');
-    if(ownerInline) ownerInline.textContent = 'Your Name';
+    if(ownerInline) ownerInline.textContent = 'Luca';
   </script>
 </body>
 </html>
+
 
