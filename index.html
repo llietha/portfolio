@@ -265,7 +265,7 @@
           <figcaption>Scenario 1 — Docking through planets</figcaption>
         </figure>
         <figure class="third">
-          <div class="yt" data-yt="https://youtube.com/shorts/BQusGgvJpuU?feature=share"></div>
+          <div class="yt" data-yt="https://youtube.com/shorts/BQusGgvJpu?feature=share"></div>
           <figcaption>Scenario 2 — Static goal with moving satellites</figcaption>
         </figure>
         <figure class="third">
@@ -316,11 +316,21 @@
         date: '',
         tags: ['Course Project','Mechatronics','Embedded','Robotics'],
         bodyHtml: `
-          <p>Focused on programming, modeling, and control for a <em>ball‑balancing robot</em> (hardware provided — I didn’t design or assemble it). I brought up an ESP32 control stack, interfaced a Pixy2 camera over SPI, and calibrated pixel‑to‑world coordinates. I derived the 3‑RRS plate inverse kinematics to convert desired tilt into servo commands, modeled the ball‑on‑plate dynamics and linearized about zero tilt, then designed and tuned a discrete PID with anti‑windup and rate/limit handling. To account for ~20 ms sensing latency and ≈60 Hz measurements, I added filtering and latency‑aware logic. The result is stable closed‑loop tracking of set‑points and circular trajectories with robust disturbance rejection.</p>
+          <p><em>Ball‑on‑plate robot (hardware provided; my focus: modeling, control, and software)</em></p>
+          <ul>
+            <li><strong>Sensing &amp; bring‑up:</strong> ESP32 control stack; Pixy2 camera over SPI; pixel→world calibration for accurate position estimates.</li>
+            <li><strong>Kinematics:</strong> Derived 3‑RRS plate inverse kinematics mapping desired plate tilt → servo commands.</li>
+            <li><strong>Modeling:</strong> Formulated ball‑on‑plate dynamics and linearized about zero tilt for controller design.</li>
+            <li><strong>Control:</strong> Discrete PID with anti‑windup, rate limiting, and saturation handling; set‑point/trajectory generator (steps, circles).</li>
+            <li><strong>Latency &amp; filtering:</strong> Compensated ~20 ms sensing delay; ≈60 Hz measurement loop; low‑pass and derivative filtering for noise/latency.</li>
+            <li><strong>Robustness &amp; safety:</strong> Disturbance rejection (taps), watchdogs, soft bounds, and a failsafe flat‑plate mode.</li>
+            <li><strong>Outcome:</strong> Stable closed‑loop tracking of set‑points and circular trajectories; smooth recovery from perturbations (see videos below).</li>
+            <li><strong>Tech stack:</strong> C++/Arduino (ESP32), Python for calibration/logging, plotting‑driven tuning workflow.</li>
+          </ul>
           <div class="media-grid">
             <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/Yji1pZ6IBtU?feature=share"></div></div>
             <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/nKngOLTO-3A?feature=share"></div></div>
-            <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/nKngOLTO-3A?feature=share"></div></div>
+            <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/vU4YdiH_4Po?feature=share"></div></div>
           </div>
         `,
         images: [],
