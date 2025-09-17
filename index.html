@@ -127,6 +127,15 @@
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
+
+    /* Zoomable media & lightbox */
+    .zoomable{cursor: zoom-in;}
+    .lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(0,0,0,.78); z-index:9999}
+    .lightbox.open{display:flex}
+    .lightbox__inner{max-width:95vw; max-height:92vh; display:flex; align-items:center; justify-content:center}
+    .lightbox__img{max-width:95vw; max-height:92vh; border-radius:14px; box-shadow: var(--shadow); background: var(--bg-soft)}
+    .lightbox__close{position:absolute; top:14px; right:14px; background:rgba(0,0,0,.45); color:white; border:1px solid rgba(255,255,255,.3); font-size:22px; border-radius:10px; padding:6px 10px; cursor:pointer}
+    .no-scroll{overflow:hidden}
   </style>
 </head>
 <body>
@@ -144,6 +153,14 @@
   </header>
 
   <main class="wrap" id="app" aria-live="polite"></main>
+
+  <!-- Lightbox modal (click images to open) -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close">✕</button>
+    <div class="lightbox__inner">
+      <img id="lightboxImg" class="lightbox__img" alt="Expanded media" />
+    </div>
+  </div>
 
   <footer>
     <div class="wrap">© <span id="year"></span> <span id="owner">Luca Lietha</span>. Built with a single HTML file. Hosted on GitHub Pages.</div>
@@ -378,33 +395,33 @@
           <details class="cardlike"><summary><strong>Results — key outcomes & visuals</strong></summary>
             <div class="media-grid">
               <figure class="wide">
-                <img src="assetsforportfolio/COCO/metric(3).png" alt="KPIs across scenarios: No Controller, P, MPC, DeePC" loading="lazy"/>
+                <img class="zoomable" data-zoomable src="assetsforportfolio/COCO/metric(3).png" alt="KPIs across scenarios: No Controller, P, MPC, DeePC" loading="lazy"/>
                 <figcaption>Overall KPIs across all four scenarios (CO₂, travel time, waiting time, #vehicles).</figcaption>
               </figure>
 
               <figure class="half">
-                <img src="assetsforportfolio/COCO/plot(1).png" alt="Flow/ density comparison: P vs No Controller" loading="lazy"/>
+                <img class="zoomable" data-zoomable src="assetsforportfolio/COCO/plot(1).png" alt="Flow/ density comparison: P vs No Controller" loading="lazy"/>
                 <figcaption>Dynamics: <strong>P vs No Controller</strong> — effect of simple feedback vs no control.</figcaption>
               </figure>
               <figure class="half">
-                <img src="assetsforportfolio/COCO/plot(4).png" alt="Flow/ density comparison: P vs MPC vs DeePC" loading="lazy"/>
+                <img class="zoomable" data-zoomable src="assetsforportfolio/COCO/plot(4).png" alt="Flow/ density comparison: P vs MPC vs DeePC" loading="lazy"/>
                 <figcaption>Dynamics: <strong>P vs MPC vs DeePC</strong> — model‑based vs data‑driven controllers.</figcaption>
               </figure>
 
               <figure class="quarter">
-                <img src="assetsforportfolio/COCO/no_control_demo_heatmap.gif" alt="No Controller — network evolution heatmap (GIF)"/>
+                <img class="zoomable" data-zoomable data-gif-loop data-gif-duration="7000" src="assetsforportfolio/COCO/no_control_demo_heatmap.gif" alt="No Controller — network evolution heatmap (GIF)"/>
                 <figcaption>No Controller — evolution</figcaption>
               </figure>
               <figure class="quarter">
-                <img src="assetsforportfolio/COCO/P_control_demo_heatmap.gif" alt="P Controller — network evolution (GIF)"/>
+                <img class="zoomable" data-zoomable data-gif-loop data-gif-duration="7000" src="assetsforportfolio/COCO/P_control_demo_heatmap.gif" alt="P Controller — network evolution (GIF)"/>
                 <figcaption>P — evolution</figcaption>
               </figure>
               <figure class="quarter">
-                <img src="assetsforportfolio/COCO/MPC_control_demo_heatmap.gif" alt="MPC — network evolution (GIF)"/>
+                <img class="zoomable" data-zoomable data-gif-loop data-gif-duration="7000" src="assetsforportfolio/COCO/MPC_control_demo_heatmap.gif" alt="MPC — network evolution (GIF)"/>
                 <figcaption>MPC — evolution</figcaption>
               </figure>
               <figure class="quarter">
-                <img src="assetsforportfolio/COCO/DeePC_control_demo_heatmap.gif" alt="DeePC — network evolution (GIF)"/>
+                <img class="zoomable" data-zoomable data-gif-loop data-gif-duration="7000" src="assetsforportfolio/COCO/DeePC_control_demo_heatmap.gif" alt="DeePC — network evolution (GIF)"/>
                 <figcaption>DeePC — evolution</figcaption>
               </figure>
             </div>
@@ -431,9 +448,14 @@
     // 2) TINY ROUTER
     // ---------------------
     const app = document.getElementById('app');
+    let _gifTimers = [];
+
+    function clearGifLoops(){ _gifTimers.forEach(id=>clearInterval(id)); _gifTimers = []; }
 
     function route(){
       const hash = location.hash || '#/'
+      // Stop any GIF-loop timers when navigating
+      clearGifLoops();
       // Flatten background on detail pages to remove gradient bands
       document.body.classList.toggle('flat', hash.startsWith('#/project/'));
       if(hash.startsWith('#/project/')){
@@ -533,6 +555,13 @@
           ${renderMedia(p)}
         </article>
       `;
+
+      // After rendering, enable zoom + looping for the Computational Control section
+      if (slug === 'computational-control'){
+        const article = app.querySelector('article.detail');
+        initZoomable(article);
+        setupGifLooping(article);
+      }
     }
 
     function renderMedia(p){
@@ -646,11 +675,65 @@
       });
     }
 
+    // ---------------------
+    // 5) LIGHTBOX + GIF LOOPING (Computational Control section)
+    // ---------------------
+    function initZoomable(scope=document){
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightboxImg');
+      const lbClose = document.getElementById('lightboxClose');
+
+      function open(src, alt=''){
+        lbImg.src = src;
+        lbImg.alt = alt || 'Expanded media';
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+        document.body.classList.add('no-scroll');
+      }
+      function close(){
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden','true');
+        document.body.classList.remove('no-scroll');
+        lbImg.src = '';
+        lbImg.alt = '';
+      }
+
+      // Click-to-open
+      scope.querySelectorAll('img[data-zoomable]').forEach(img=>{
+        img.classList.add('zoomable');
+        img.addEventListener('click', ()=> open(img.src, img.alt));
+        img.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(img.src, img.alt);} });
+        img.setAttribute('tabindex','0');
+        img.setAttribute('role','button');
+        img.setAttribute('aria-label','Open full size');
+      });
+
+      // Close interactions
+      lb.addEventListener('click', (e)=>{ if(e.target === lb) close(); });
+      lbClose.addEventListener('click', close);
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lb.classList.contains('open')) close(); });
+    }
+
+    function setupGifLooping(scope=document){
+      const gifs = scope.querySelectorAll('img[data-gif-loop]');
+      gifs.forEach(img=>{
+        const ms = parseInt(img.getAttribute('data-gif-duration')||'7000', 10);
+        // Periodically restart the GIF by cache-busting the src.
+        // NOTE: True infinite looping depends on the GIF's internal loop setting.
+        const restart = ()=>{
+          const base = img.src.split('#')[0].split('?')[0];
+          img.src = base + '?t=' + Date.now();
+        };
+        // Start a timer and keep reference so we can clear on navigation
+        const id = setInterval(restart, ms);
+        _gifTimers.push(id);
+      });
+    }
+
     document.getElementById('owner').textContent = 'Luca Lietha';
     const ownerInline = document.getElementById('owner-inline');
     if(ownerInline) ownerInline.textContent = 'Luca';
   </script>
 </body>
 </html>
-
 
