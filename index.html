@@ -116,6 +116,11 @@
     #cc-s2:checked ~ .panels [data-for="cc-s2"],
     #cc-s3:checked ~ .panels [data-for="cc-s3"],
     #cc-s4:checked ~ .panels [data-for="cc-s4"]{display:block}
+
+    /* Under construction notice */
+    .notice{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; border:1px dashed color-mix(in oklab, var(--accent) 45%, transparent); background: color-mix(in oklab, var(--accent) 12%, transparent); margin: 8px 0 12px;}
+    .notice .emoji{font-size:18px;}
+    .muted-list{color:var(--muted); margin:8px 0 0 20px}
   </style>
 </head>
 <body>
@@ -150,11 +155,10 @@
         summary: 'Extended Deep Evidential Koopman Operators with MPCC for uncertainty-aware path tracking in autonomous robots.',
         date: '',
         tags: ['Thesis','Research','Control','Robotics','Optimization','Uncertainty'],
-        bodyHtml: `
-          <p>In my bachelor thesis, I extended the <em>Deep Evidential Koopman Operator</em> framework to enable uncertainty-aware path tracking for autonomous robots. Specifically, I:</p>
+        bodyHtml: `          <p>In my bachelor thesis, I extended the <em>Deep Evidential Koopman Operator</em> framework to enable uncertainty-aware path tracking for autonomous robots. Specifically, I:</p>
           <ul>
-            <li>Integrated <strong>Model Predictive Contouring Control (MPCC)</strong> into the existing Koopman control framework to allow robots to follow a reference path while avoiding regions of high <em>epistemic uncertainty</em>.</li>
-            <li>Developed a <strong>path generation module</strong> for static global trajectories compatible with the contouring control formulation.</li>
+            <li>Integrated Model Predictive Contouring Control (MPCC) into the existing Koopman control framework to allow robots to follow a reference path while avoiding regions of high <em>epistemic uncertainty</em>.</li>
+            <li>Developed a path generation module for static global trajectories compatible with the contouring control formulation.</li>
             <li>Implemented and tested the system in simulation, demonstrating its ability to accurately follow paths, handle position constraints, and deviate safely from paths in areas with high uncertainty.</li>
           </ul>
           <p>This work combines control theory, uncertainty quantification, and optimization to improve the safety and reliability of learning‑based robotic controllers.</p>
@@ -225,13 +229,13 @@
         videos: []
       },
       {
-  slug: 'planning-and-decision-making',
-  title: 'Planning & Decision Making for Autonomous Robots — Course Project',
-  cover: 'assetsforportfolio/Planning and Decision Making Project Picture.png',
-  summary: 'Six subparts: Graph search, Dynamic programming, Dubins path, Collision checking, Spaceship, Highway driving.',
-  date: '',
-  tags: ['Course Project','Planning','Decision-Making','Graph Search','A*','UCS','Dynamic Programming'],
-  bodyHtml: `
+        slug: 'planning-and-decision-making',
+        title: 'Planning & Decision Making for Autonomous Robots — Course Project',
+        cover: 'assetsforportfolio/Planning and Decision Making Project Picture.png',
+        summary: 'Six subparts: Graph search, Dynamic programming, Dubins path, Collision checking, Spaceship, Highway driving.',
+        date: '',
+        tags: ['Course Project','Planning','Decision-Making','Graph Search','A*','UCS','Dynamic Programming'],
+        bodyHtml: `
     <p>Algorithms and decision-making pipelines for navigation and control. Below are compact subparts focusing on what I built and evaluated.</p>
 
     <h3>Subparts</h3>
@@ -315,9 +319,7 @@
         summary: 'Wearable‑sensor pipeline for activity recognition and health metrics.',
         date: '',
         tags: ['Course Project','mHealth','Wearables','ML'],
-        bodyHtml: `
-          <p><strong>Replace me:</strong> Sensors used (ACC/GYR/PPG), features/models, metrics (e.g., F1, AUROC).</p>
-        `,
+        bodyHtml: `<aside class="notice"><span class="emoji" aria-hidden="true">🚧</span> Under construction.</aside>`,
         images: [],
         videos: []
       },
@@ -325,7 +327,7 @@
         slug: 'introduction-to-mechatronics',
         title: 'Introduction to Robotics and Mechatronics — Course Project',
         cover: 'assetsforportfolio/Introduction to Robotics Projec Picture.png',
-        summary: 'Designed and built a mechatronic prototype with embedded control.',
+        summary: 'Ball‑on‑plate: modeling, control & software on provided hardware.',
         date: '',
         tags: ['Course Project','Mechatronics','Embedded','Robotics'],
         bodyHtml: `
@@ -413,9 +415,7 @@
         summary: 'Built ML models for classification/regression with proper validation.',
         date: '',
         tags: ['Course Project','Machine Learning'],
-        bodyHtml: `
-          <p><strong>Replace me:</strong> Problem description, data processing, models (e.g., XGBoost/NN), and results.</p>
-        `,
+        bodyHtml: `<aside class="notice"><span class="emoji" aria-hidden="true">🚧</span> Under construction.</aside>`,
         images: [],
         videos: []
       }
