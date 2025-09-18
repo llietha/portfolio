@@ -346,7 +346,27 @@
         summary: 'Wearable‑sensor pipeline for activity recognition and health metrics.',
         date: '',
         tags: ['Course Project','mHealth','Wearables','ML'],
-        bodyHtml: `<aside class="notice"><span class="emoji" aria-hidden="true">🚧</span> Under construction.</aside>`,
+        bodyHtml: `
+          <h3>Subprojects</h3>
+
+          <details class="cardlike"><summary><strong>1) Heart Rate Estimation from PPG</strong></summary>
+            <ul>
+              <li>Built a preprocessing pipeline for wrist‑PPG: detrending, motion‑artifact suppression, and band‑pass filtering around the physiological HR band.</li>
+              <li>Compared frequency‑domain (FFT / peak picking) vs. time‑domain (autocorrelation) estimators; evaluated window length and overlap.</li>
+              <li>Validated against chest‑strap ground truth; reported MAE and Bland–Altman analysis across rest/walk/jog segments.</li>
+            </ul>
+          </details>
+
+          <details class="cardlike"><summary><strong>2) Wearable Activity Monitoring</strong></summary>
+            <ul>
+              <li>Engineered time/frequency features from IMU (acc/gyro) and barometer (altitude) for daily‑activity recognition.</li>
+              <li>Built an XGBoost classifier with stratified cross‑validation; calibrated probabilities and analyzed confusion matrices.</li>
+              <li>Explored on‑device feasibility: feature cost vs. accuracy trade‑offs and simple post‑processing (mode filters).</li>
+            </ul>
+          </details>
+
+          <aside class="notice"><span class="emoji" aria-hidden="true">🚧</span> More figures, metrics, and code links are being prepared.</aside>
+        `,
         images: [],
         videos: []
       },
@@ -442,6 +462,17 @@
         summary: 'Built ML models for classification/regression with proper validation.',
         date: '',
         tags: ['Course Project','Machine Learning'],
+        bodyHtml: `<aside class="notice"><span class="emoji" aria-hidden="true">🚧</span> Under construction.</aside>`,
+        images: [],
+        videos: []
+      },
+      {
+        slug: 'internship-drones-hydro-4-0',
+        title: 'Internship Drones & Hydro 4.0',
+        cover: 'assetsforportfolio/under_construction.png', /* placeholder image path */
+        summary: 'Environmental monitoring with UAVs around hydro infrastructure.',
+        date: '',
+        tags: ['Internship','UAV','Hydropower','Environmental Robotics'],
         bodyHtml: `<aside class="notice"><span class="emoji" aria-hidden="true">🚧</span> Under construction.</aside>`,
         images: [],
         videos: []
@@ -740,4 +771,5 @@
   </script>
 </body>
 </html>
+
 
