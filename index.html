@@ -178,7 +178,8 @@
         summary: 'Extended Deep Evidential Koopman Operators with MPCC for uncertainty-aware path tracking in autonomous robots.',
         date: '',
         tags: ['Thesis','Research','Control','Robotics','Optimization','Uncertainty'],
-        bodyHtml: `          <p>In my bachelor thesis, I extended the <em>Deep Evidential Koopman Operator</em> framework to enable uncertainty-aware path tracking for autonomous robots. Specifically, I:</n          </p>
+        bodyHtml: `
+          <p>In my bachelor thesis, I extended the <em>Deep Evidential Koopman Operator</em> framework to enable uncertainty-aware path tracking for autonomous robots. Specifically, I:</p>
           <ul>
             <li>Integrated Model Predictive Contouring Control (MPCC) into the existing Koopman control framework to allow robots to follow a reference path while avoiding regions of high <em>epistemic uncertainty</em>.</li>
             <li>Developed a path generation module for static global trajectories compatible with the contouring control formulation.</li>
@@ -338,7 +339,6 @@
   images: [],
   videos: []
 },
-
       {
         slug: 'mobile-health-activity-monitoring',
         title: 'Mobile Health & Activity Monitoring — Course Project',
@@ -466,7 +466,7 @@
         images: [],
         videos: []
       },
-      
+      {
         slug: 'internship-drones-hydro-4-0',
         title: 'Internship Drones & Hydro 4.0',
         cover: 'assetsforportfolio/Drone Over Mountain Dam.png',
@@ -534,7 +534,8 @@
         renderHome();
       }
       initYouTubePlaceholders(document);
-      scrollTo({top:0, behavior:'instant'});
+      // 'auto' or 'smooth' are valid; 'instant' is not standard
+      scrollTo({top:0, behavior:'auto'});
     }
 
     window.addEventListener('hashchange', route);
@@ -805,5 +806,6 @@
   </script>
 </body>
 </html>
+
 
 
