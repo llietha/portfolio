@@ -209,7 +209,7 @@
           <details class="cardlike"><summary><strong>1) Kinematic walking controller</strong></summary>
             <ul>
               <li>Implemented foot forward kinematics and both finite‑difference and analytic Jacobians.</li>
-              <li>Built a Gauss–Newton IK solver (FD Jacobian for grading) and a base trajectory planner via velocity integration.</li>
+              <li>Built a Gauss–Newton IK solver and a base trajectory planner via velocity integration.</li>
               <li>Added uneven‑terrain support (height‑map y‑offsets) and defined a hexapod foot‑contact (gait) timeline.</li>
               <li>Validated in quadruped/hexapod simulation and deployed on SpiderPi hexapod hardware.</li>
             </ul>
@@ -222,7 +222,7 @@
 
           <details class="cardlike"><summary><strong>2) Trajectory optimization for quadruped robots</strong></summary>
             <ul>
-              <li>Built a multiple‑shooting trajectory optimizer in <em>CasADi</em> using a single rigid‑body model; ran experiments at 50&nbsp;Hz.</li>
+              <li>Built a multiple‑shooting trajectory optimizer in <em>CasADi</em> using a single rigid‑body model.</li>
               <li>Implemented objectives to track kinematic references with smoothness/continuity costs.</li>
               <li>Added constraints: system dynamics; initial state; ground contact (no penetration), zero swing forces, no foot‑skating; friction pyramid.</li>
               <li>Generated missing foot paths for partial references; enforced shoulder‑plane constraint.</li>
@@ -267,7 +267,6 @@
       <ul>
         <li>Implemented classic search (BFS, DFS, Iterative Deepening) and shortest-path search (UCS, A*).</li>
         <li>Deterministic neighbor handling: sort new neighbors, avoid duplicates; return <em>Path</em> and <em>OpenedNodes</em>.</li>
-        <li>A*: admissible time lower bound = great-circle distance / max speed.</li>
       </ul>
     </details>
 
@@ -316,18 +315,23 @@
     </details>
 
     <details class="cardlike"><summary><strong>6) Highway Driving</strong></summary>
-      <p>Built a lane‑change planning & control stack for an autonomous car in mixed traffic with unknown human policies (CommonRoad lanelets, kinematic bicycle, closed‑loop simulator).</p>
+      <p><em>Autonomous Lane Change Agent.</em> Developed a state-machine-based decision and control system for autonomous highway driving in mixed traffic, using CommonRoad lanelet networks and a closed-loop simulator.</p>
       <ul>
-        <li>Hierarchical planner: behavior (keep/prepare/perform lane change) + local trajectory scoring optimizing TTC risk, lane‑change time, comfort, and rule compliance.</li>
-        <li>360° LiDAR‑style observations with occlusions; constant‑velocity prediction with safety margins.</li>
-        <li>Constraint handling & continuous collision checks against lane geometry and moving vehicles.</li>
-        <li>Split planning/control rates (plan slower, control 10 Hz) with kinematic‑bicycle tracking.</li>
-        <li>Benchmarked on basic, dense, and near‑exit‑merge scenarios vs KPIs (collision/success, TTC, time, comfort, computation).</li>
+        <li><strong>State Machine Controller:</strong> Switched between “Follow Lane” and “Change Lane” behaviors based on lanelet topology and vehicle goal, enabling robust navigation and maneuver planning.</li>
+        <li><strong>LiDAR-Style Observations:</strong> Agent perceives its environment via simulated 2D 360° LiDAR with occlusions, providing realistic detection and blind spots.</li>
+        <li><strong>Collision Avoidance &amp; Control:</strong> Performed continuous collision checks against moving vehicles and lane boundaries, generating safe steering/acceleration using a kinematic bicycle model.</li>
+        <li><strong>Scenario-Driven Evaluation:</strong> Validated across basic, dense, and merge/exit scenarios; measured on safety, efficiency, comfort, and computation.</li>
       </ul>
       <div class="media-grid">
-        <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/gGNUKM6nwdQ?feature=share"></div></div>
-        <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/8ByrrcIDmcI?feature=share"></div></div>
-        <div class="third"><div class="yt" data-yt="https://youtube.com/shorts/fwiVEdY9obw?feature=share"></div></div>
+        <figure class="third">
+          <div class="yt" data-yt="https://youtube.com/shorts/gGNUKM6nwdQ?feature=share"></div>
+        </figure>
+        <figure class="third">
+          <div class="yt" data-yt="https://youtube.com/shorts/8ByrrcIDmcI?feature=share"></div>
+        </figure>
+        <figure class="third">
+          <div class="yt" data-yt="https://youtube.com/shorts/fwiVEdY9obw?feature=share"></div>
+        </figure>
       </div>
     </details>
   `,
@@ -386,7 +390,7 @@
           <ul>
             <li><strong>Problem:</strong> Morning inbound congestion; the baseline P controller can destabilize queues under demand surges.</li>
             <li><strong>Model‑based (MPC):</strong> Linear network model → QP‑based MPC with horizon <em>N</em>, bounds on densities/speeds, soft constraints; objective trades off target densities and control effort. Tuned (<em>Q, R, N</em>) with warm starts.</li>
-            <li><strong>Data‑driven (DeePC):</strong> Past/future Hankel matrices from provided data; Tikhonov and projection regularizers; hyper‑parameters (λ<sub>y</sub>, λ<sub>g</sub>) via grid search. Robust to model mismatch.</li>
+            <li><strong>Data‑driven (DeePC):</strong> Past/future Hankel matrices from provided data; Tikhonov and projection regularizers; hyper‑parameters (λ<sub>y</sub>, λ<sub>g</sub>) via grid search.</li>
             <li><strong>Evaluation:</strong> Scenarios <em>no control</em> vs <em>P</em> vs <em>MPC</em> vs <em>DeePC</em>. KPIs: mean travel time, total delay/stopped time, queue lengths, successful trips. Plots and GIF heatmaps summarize behavior.</li>
             <li><strong>Outcome:</strong> Both MPC and DeePC outperformed no‑control and the P baseline; DeePC handled demand shifts best, MPC provided transparent constraint handling for deployment.</li>
             <li><strong>Deliverables:</strong> Self‑contained Jupyter notebook (reproducible figures/tables) and a concise 5‑slide brief for non‑technical stakeholders.</li>
